@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>Pixel access, image measurement</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Pixel access, image measurement
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+<h1>Pixel access</h1>
+<article class = "content">
+<table>
+<tr><th>getpixel (x: int, y: int)</th></tr>
+<tr><td>
+<div class = "exp">Get the pixel value of (x, y)</div>
+<div class = "param">(x, y) coordinates</div>
+<div class = "ret">pixel value</div>
+</td></tr>
+
+<tr><th>setpixel (x: int, y: int, b: int, g: int = 0, r: int = 0)</th></tr>
+<tr><td>
+<div class = "exp">Put a value in the pixel of (x, y)</div>
+<div class = "param">(x, y) coordinates
+(b, g, r) value</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>Image measurement</h1>
+<article class = "content">
+<table>
+<tr><th>get3data (x: int, y: int)</th></tr>
+<tr><td>
+<div class = "exp">Get data near 3 pixcel
+        Output as np.ndarray for each row (Y-axis)
+        For 2D data Access with data [y] [x]
+        For 3D data Access with data [y] [x] [B | G | R]
+        Slicing with bitmap [top: bottom, left: right]</div>
+<div class = "param">(x, y) center coordinates</div>
+<div class = "ret">np.ndarray</div>
+<pre>
+color = UOpenCV (fname)
+print (color.get3data (100,100))
+</pre>
+<pre>
+[[[95 90 200] (x-1 column, y-1 row)
+  [100 89 203] (x column, y-1 row)
+  [90 92 208]] (x + 1 columns, y-1 rows)
+
+ [[87 85 194] (x-1 columns, y rows)
+  [96 84 198] (x columns, y rows)
+  [93 87 203]] (x + 1 columns, y rows)
+
+ [[91 86 190] (x-1 column, y + 1 row)
+  [85 82 189] (x columns, y + 1 rows)
+  [92 82 197]]] (x + 1 columns, y + 1 rows)
+</pre>
+</td></tr>
+
+<tr><th>get7data (x: int, y: int)</th></tr>
+<tr><td>
+<div class = "exp">Get data near 7 pixcel
+        Output as np.ndarray for each row (Y-axis)
+        For 2D data Access with data [y] [x]
+        For 3D data Access with data [y] [x] [B | G | R]</div>
+<div class = "param">(x, y) center coordinates</div>
+<div class = "ret">np.ndarray</div>
+</td></tr>
+
+<tr><th>get_line_data (bx: int, by: int, ex: int, ey: int)</th></tr>
+<tr><td>
+<div class = "exp">Get data on line</div>
+<div class = "param">(bx, by) Starting point
+(ex, ey) End point</div>
+<div class = "ret">self.x_axis, self.y_axis axis
+image of only one channel such as self.value_b gray, binary, HSL
+              color (b), fft (real) data
+self.value_g color (g), fft (imaginary) data
+self.value_r color (r) data</​​div>
+<pre>
+color = UOpenCV (fname)
+data = color.get_line_data (100,100,200,150)
+UOpenCVUtil.showLine (data,'color line','distribution on the line', True)
+print ('B mean = {: 4.1f}, std = {: 4.1f}, median = {: 4.1f}, max = {: 3d}, min = {: 3d}'.format (data.mean_b, data) .std_b, data.median_b, data.max_b, data.min_b))
+print ('G mean = {: 4.1f}, std = {: 4.1f}, median = {: 4.1f}, max = {: 3d}, min = {: 3d}'.format (data.mean_g, data) .std_g, data.median_g, data.max_g, data.min_g))
+print ('R mean = {: 4.1f}, std = {: 4.1f}, median = {: 4.1f}, max = {: 3d}, min = {: 3d}'.format (data.mean_r, data) .std_r, data.median_r, data.max_r, data.min_r))
+
+</pre>
+</td></tr>
+
+<tr><th>calcHist (bx: int = 0, by: int = 0, ex: int = 0, ey: int = 0)</th></tr>
+<tr><td>
+<div class = "exp">Aggregate histograms</div>
+<div class = "param">(bx, by)->(ex, ey) Specified range
+        If the argument is omitted (all 0s), the entire area</div>
+<div class = "ret">self.hist_b, self.hist_g, self.hist_r Histogram data
+self.dist_array A list of aggregated results
+self.dist_stat List of mean, standard deviation, median, volatility (%)</div>
+<pre>
+color = UOpenCV (fname)
+data = color.calcHist (100,100,200,150)
+UOpenCVUtil.showHist (data, title ='color histogram', block = True)
+print (data.dist_stat)
+</pre>
+</td></tr>
+
+<tr><th>projection_distribution_h (bx: int = 0, by: int = 0, ex: int = 0, ey: int = 0)</th></tr>
+<tr><td>
+<div class = "exp">Horizontal marginal distribution</div>
+<div class = "param">(bx, by)->(ex, ey) Specified range
+        If the argument is omitted (all 0s), the entire area</div>
+<div class = "ret">self.array_y, self.array_b, self.array_g, self.array_r Histogram data
+self.dist_array A list of aggregated results
+self.dist_stat A list of mean, standard deviation, median, maximum, and minimum</div>
+<pre>
+color = UOpenCV (fname)
+data = color.projection_distribution_h ()
+UOpenCVUtil.showDist (data, title ='color horizontal marginal distribution', block = True)
+print (data.dist_stat)
+</pre>
+</td></tr>
+
+<tr><th>projection_distribution_v (bx: int = 0, by: int = 0, ex: int = 0, ey: int = 0)</th></tr>
+<tr><td>
+<div class = "exp">Vertical Marginal Distribution</div>
+<div class = "param">(bx, by)->(ex, ey) Specified range
+        If the argument is omitted (all 0s), the entire area</div>
+<div class = "ret">self.array_x, self.array_b, self.array_g, self.array_r Histogram data
+self.dist_array A list of aggregated results
+self.dist_stat A list of mean, standard deviation, median, maximum, and minimum</div>
+</td></tr>
+
+</table>
+</article>
+
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class. (C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

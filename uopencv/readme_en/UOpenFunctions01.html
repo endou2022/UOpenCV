@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title> UOpenCV function list </title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+UOpenCV function list
+</header>
+
+<nav>
+<ul>
+<li> <a href="index.html"> Introduction </a> </li>
+<li> <a href="UOpenCVClass.html"> How to use the UOpenCV class </a> </li>
+<li> <a href="UOpenFunctions01.html"> UOpenCV function list </a> </li>
+<li> <a href="UOpenFunctions02.html"> Constructor, properties, input / output </a> </li>
+<li> <a href="UOpenFunctions03.html"> Pixel access, image measurement </a> </li>
+<li> <a href="UOpenFunctions04.html"> Geometric transformation, image transformation </a> </li>
+<li> <a href="UOpenFunctions05.html"> Image processing Shading correction, histogram conversion </a> </li>
+<li> <a href="UOpenFunctions06.html"> Image processing Image filter, look-up table </a> </li>
+<li> <a href="UOpenFunctions07.html"> Image processing Morphology processing, edge detection </a> </li>
+<li> <a href="UOpenFunctions08.html"> Image processing Art effect, binary image processing </a> </li>
+<li> <a href="UOpenFunctions09.html"> Image processing: Inverse FFT conversion, inter-image calculation </a> </li>
+<li> <a href="UOpenFunctions10.html"> Auxiliary Functions </a> </li>
+<li> <a href="UOpenFunctions11.html"> Histogram display </a> </li>
+</ul>
+</nav>
+
+<section>
+<h1> UOpenCV function list </h1>
+
+<article class = "content">
+<table>
+<tr> <th> Processing </th> <th> Function name </th> <th> Corresponding OpenCV function </th> <th> Remarks </th> </tr>
+<tr> <th colspan = "4"> <a href="UOpenFunctions02.html"> Constructor, Properties </a> </th> </tr>
+<tr> <td> Constructor </td> <td> UOpenCV </td> <td> </td> <td> </td> </tr>
+<tr> <td> Bitmap data </td> <td> bitmap </td> <td> </td> <td> Read-only properties </td> </tr>
+<tr> <td> filename </td> <td> name </td> <td> </td> <td> read-only properties </td> </tr>
+<tr> <td> Data type </td> <td> kind </td> <td> </td> <td> Read-only properties </td> </tr>
+<tr> <td> Image width </td> <td> width </td> <td> </td> <td> Read-only properties </td> </tr>
+<tr> <td> Image height </td> <td> height </td> <td> </td> <td> Read-only properties </td> </tr>
+<tr> <td> Processing history </td> <td> log </td> <td> </td> <td> Read-only properties </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions02.html"> I / O </a> </th> </tr>
+<tr> <td> Image input </td> <td> imread </td> <td> cv2.imdecode </td> <td> OpenCV reading does not support Japanese path <br> numpy. fromfile </td> </tr>
+<tr> <td> Image output </td> <td> imwrite </td> <td> cv2.imencode </td> <td> OpenCV writing does not support Japanese paths </td> </tr>
+<tr> <td> Copy from clipboard </td> <td> load_clipboard </td> <td> </td> <td> Not implemented </td> </tr>
+<tr> <td> Copy to clipboard </td> <td> save_clipboard </td> <td> </td> <td> Not implemented </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions03.html"> Pixel access </a> </th> </tr>
+<tr> <td> Get the pixel value of (x, y) </td> <td> getpixel </td> <td> </td> <td> </td> </tr>
+<tr> <td> Put a value in the pixel of (x, y) </td> <td> setpixel </td> <td> </td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions03.html"> Image measurement </a> </th> </tr>
+<tr> <td> Get data in the vicinity of 3 </td> <td> get3data </td> <td> </td> <td> </td> </tr>
+<tr> <td> Get data in the vicinity of 7 </td> <td> get7data </td> <td> </td> <td> </td> </tr>
+<tr> <td> Get data on line </td> <td> get_line_data </td> <td> </td> <td> </td> </tr>
+<tr> <td> Luminance Histogram Aggregation </td> <td> calcHist </td> <td> cv2.calcHist </td> <td> </td> </tr>
+<tr> <td> Horizontal Marginal Distribution </td> <td> projection_distribution_h </td> <td> </td> <td> </td> </tr>
+<tr> <td> Vertical Marginal Distribution </td> <td> projection_distribution_v </td> <td> </td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions04.html"> Geometric transformation </a> </th> </tr>
+<tr> <td> Resize image </td> <td> resize </td> <td> cv2.resize </td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions04.html"> Image conversion </a> </th> </tr>
+<tr> <td> Grayscale conversion </td> <td> grayscale </td> <td> cv2.cvtColor </td> <td> </td> </tr>
+<tr> <td> Monotone conversion </td> <td> monotone </td> <td> cv2.cvtColor </td> <td> </td> </tr>
+<tr> <td> Pseudo color display </td> <td> applyColorMap </td> <td> cv2.applyColorMap </td> <td> </td> </tr>
+<tr> <td> Color image separation </td> <td> cvtColor </td> <td> cv2.cvtColor </td> <td> </td> </tr>
+<tr> <td> Global binarization </td> <td> threshold </td> <td> cv2.threshold </td> <td> </td> </tr>
+<tr> <td> Adaptive binarization </td> <td> adaptiveThreshold </td> <td> cv2.adaptiveThreshold </td> <td> </td> </tr>
+<tr> <td> Execute FFT to create power spectrum image </td> <td> dft </td> <td> cv2.dft </td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions05.html"> Image processing shading correction </a> </th> </tr>
+<tr> <td> Shading correction using black reference image </td> <td> shading_black </td> <td> </td> <td> </td> </tr>
+<tr> <td> Shading correction using white / black reference image </td> <td> shading_white_black </td> <td> </td> <td> </td> </tr>
+<tr> <td> Shading correction (unevenness coefficient) </td> <td> shading_unevenness </td> <td> </td> <td> </td> </tr>
+<tr> <td> Shading correction (morphology operation) </td> <td> shading_blackhat </td> <td> cv2.morphologyEx <br> cv2.bitwise_not </td> <td> cv2.MORPH_BLACKHAT </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions05.html"> Image processing Histogram conversion </a> </th> </tr>
+<tr> <td> Luminance Contrast Limit Adaptation Histogram Flattening </td> <td> equalizeHist_CLAHE </td> <td> cv2.createCLAHE </td> <td> Color images are brightness only </td> </tr> 
+<tr> <td> Luminance histogram flattening </td> <td> equalizeHist </td> <td> cv2.equalizeHist </td> <td> Color image is brightness only </td> </tr>
+<tr> <td> Histogram normalization </td> <td> normalize </td> <td> cv2.normalize </td> <td> Color image is brightness only </td> </tr>
+<tr> <td> Histogram expansion </td> <td> expand_histogram </td> <td> </td> <td> Color images are brightness only </td> </tr>
+<tr> <td> Histogram stretch </td> <td> stretch_histogram </td> <td> </td> <td> Color image is brightness only </td> </tr>
+<tr> <td> Brightness inversion </td> <td> bitwise_not_brightness </td> <td> cv2.bitwise_not </td> <td> Brightness only </td> </tr>
+<tr> <td> Negative / Positive Inversion </td> <td> bitwise_not </td> <td> cv2.bitwise_not </td> <td> </td> </tr>
+<tr> <td> Hiss with mean and standard deviationChange Togram </td> <td> convert_histogram_avg_std </td> <td> </td> <td> Color image is brightness only </td> </tr>
+<tr> <td> Brightness contrast, change brightness </td> <td> convert_contrast_brightness </td> <td> </td> <td> Brightness only </td> </tr>
+<tr> <td> Change contrast and brightness </td> <td> convertScaleAbs </td> <td> cv2.convertScaleAbs </td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions06.html"> Image processing Image filter </a> </th> </tr>
+<tr> <td> Spatial filtering </td> <td> filter2D </td> <td> cv2.filter2D </td> <td> </td> </tr>
+<tr> <td> Simple smoothing </td> <td> blur </td> <td> cv2.blur </td> <td> </td> </tr>
+<tr> <td> Median Filter </td> <td> medianBlur </td> <td> cv2.medianBlur </td> <td> </td> </tr>
+<tr> <td> Gaussian Filter </td> <td> GaussianBlur </td> <td> cv2.GaussianBlur </td> <td> </td> </tr>
+<tr> <td> Unsharp filter </td> <td> unsharp </td> <td> </td> <td> </td> </tr>
+<tr> <td> Bilateral Filter </td> <td> bilateralFilter </td> <td> cv2.bilateralFilter </td> <td> </td> </tr>
+<tr> <td> Edge Preserving Filter </td> <td> edgePreservingFilter </td> <td> cv2.edgePreservingFilter </td> <td> </td> </tr>
+<tr> <td> Detail Enhancement Filter </td> <td> detailEnhance </td> <td> cv2.detailEnhance </td> <td> </td> </tr>
+<tr> <td> Non-Local Means Filter </td> <td> fastNlMeansDenoising </td> <td> cv2.fastNlMeansDenoisingColored <br> cv2.fastNlMeansDenoising </td> <td> </td> </tr>
+<tr> <td> Sobel Filter </td> <td> Sobel </td> <td> cv2.Sobel </td> <td> </td> </tr>
+<tr> <td> Laplacian filter </td> <td> Laplacian </td> <td> cv2.Laplacian </td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions06.html"> Image processing lookup table </a> </th> </tr>
+<tr> <td> Lookup table processing </td> <td> lookup_table </td> <td> cv2.LUT </td> <td> </td> </tr>
+<tr> <td> Lookup table processing </td> <td> lookup_table_brightness </td> <td> cv2.LUT </td> <td> Brightness only </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions07.html"> Image processing Morphology processing </a> </th> </tr>
+<tr> <td> Morphology processing contraction (erosion) </td> <td> erode </td> <td> cv2.erode </td> <td> cv2.MORPH_RECT </td> </tr>
+<tr> <td> Morphology processing expansion (dilate) </td> <td> dilate </td> <td> cv2.dilate </td> <td> cv2.MORPH_RECT </td> </tr>
+<tr> <td> Morphology processing </td> <td> morphologyEx </td> <td> cv2.morphologyEx </td> <td> cv2.MORPH_RECT </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions07.html"> Image processing Edge detection </a> </th> </tr>
+<tr> <td> Morphology processing </td> <td> morphologyGradient </td> <td> cv2.dilate <br> cv2.erode <br> cv2.subtract </td> <td> </td> </tr>
+<tr> <td> Canny method </td> <td> Canny </td> <td> cv2.Canny </td> <td> </td> </tr>
+<tr> <td> Hough transform to find a circle </td> <td> HoughCircles </td> <td> cv2.HoughCircles <br> cv2.circle </td> <td> </td> </tr>
+<tr> <td> Find line segments by Hough transform </td> <td> HoughLinesP </td> <td> cv2.HoughLinesP <br> cv2.line </td> <td> </td> </tr>
+<tr> <td> Fast Line Detector </td> <td> FastLineDetector </td> <td> cv2.ximgproc.createFastLineDetector <br> fld.detect <br> fld.drawSegments </td> <td> </td> </tr>
+<tr> <td> Line Segment Detector </td> <td> LineSegmentDetector </td> <td> cv2.createLineSegmentDetector <br> lsd .detect <br> lsd.drawSegments </td> <td> </td> </tr>
+<tr> <td> Find lines with Hough transform (classical Hough transform) </td> <td> HoughLines </td> <td> cv2.HoughLines <br> cv2.line </td> <td> Example Doesn't work </td> </tr>
+<tr> <td> findContours </td> <td> findContours </td> <td> cv2.findContours <br> cv2.drawContours </td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions08.html"> Image processing art effect </a> </th> </tr>
+<tr> <td> Convert to oil painting-like image </td> <td> oilPainting </td> <td> cv2.xphoto.oilPainting </td> <td> </td> </tr>
+<tr> <td> Convert to a watercolor-like image </td> <td> stylization </td> <td> cv2.stylization </td> <td> </td> </tr>
+<tr> <td> Convert to an image like a pencil drawing </td> <td> pencilSketch </td> <td> cv2.pencilSketch </td> <td> </td> </tr>
+<tr> <td> Posterization (color reduction) </td> <td> posterization </td> <td> cv2.LUT </td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions08.html"> Image processing Binary image processing </a> </th> </tr>
+<tr> <td> (white part) thinning (skeletonization) </td> <td> thinning </td> <td> cv2.ximgproc.thinning </td> <td> </td> </tr>
+<tr> <td> White isolated point removal </td> <td> solation_point_elimination_white </td> <td> </td> <td> </td> </tr>
+<tr> <td> Black isolated point removal </td> <td> solation_point_elimination_black </td> <td> </td> <td> </td> </tr>
+<tr> <td> Labeling process Coloring "object (white)" </td> <td> labeling_paint </td> <td> cv2.connectedComponentsWithStats </td> <td> </td> </tr>
+<tr> <td> Labeling process Enclose "object (white)" in a rectangle </td> <td> labeling_overlay </td> <td> cv2.connectedComponentsWithStats <br> cv2.rectangle </td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions09.html"> Image processing Inverse FFT transform </a> </th> </tr>
+<tr> <td> Inverse FFT transform </td> <td> idft </td> <td> cv2.idft </td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions09.html"> Image processing Inter-image calculation </a> </th> </tr>
+<tr> <td> Image Blend </td> <td> addWeighted </td> <td> cv2.addWeighted </td> <td> </td> </tr>
+<tr> <td> Inter-image operation </td> <td> operation </td> <td> cv2.add <br>
+cv2.subtract <br>
+cv2.multiply <br>
+cv2.divide <br>
+cv2.absdiff <br>
+cv2.max <br>
+cv2.min <br>
+cv2.bitwise_and <br>
+cv2.bitwise_or <br>
+cv2.bitwise_xor
+</td> <td> </td> </tr>
+
+<tr> <th colspan = "4"> <a href="UOpenFunctions10.html"> Auxiliary Functions </a> </th> </tr>
+<tr> <td> Display image </td> <td> imshow </td> <td> cv2.imshow </td> <td> </td> </tr>
+<tr> <td> Waiting for key input </td> <td> waitKey </td> <td> cv2.waitKey (0) <br> cv2.destroyAllWindows () </td> <td> </td> </tr>
+<tr> <td> Read lookup table data </td> <td> read_lookuptable </td> <td> </td> <td> @staticmethod </td> </tr>
+<tr> <td> Read spatial filter data </td> <td> read_2Dfilter </td> <td> </td> <td> @staticmethod </td> </tr>
+<tr> <td> Create a monochrome image by specifying the height and width </td> <td> blank_image </td> <td> </td> <td> @staticmethod <br> numpy.full </td> </tr>
+
+</table>
+</article>
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

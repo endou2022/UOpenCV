@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>UOpenCVBase</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+How to use the UOpenCV class
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+</article>
+
+<h1>Precautions when using the method</h1>
+<article class = "content">
+As a general rule, method calls are made with name arguments. <br>
+The default arguments have been adjusted (except for some) and do not need to be specified. <br>
+Since the validity of the argument is not checked, it is necessary to give an appropriate argument on the side that calls the method. <br>
+As a general rule, the name of the method matches OpenCV. <br>
+Most methods do not change themselves, create a new UOpenCV object, put the processing result and return it.
+
+<pre>
+img = UOpenCV('lena.png')      # 1
+img.imshow()                   # 1 Object is unchanged
+img = img.calcHist()           # 1 Instance is added
+img = img.equalizeHist_CLAHE() # 2 Another object is returned. Instances added up to the previous line will not be copied
+img.imshow()                   # 2 Object is unchanged
+</pre>
+
+If you're not careful, you won't notice that the object has changed.
+
+<pre>
+img = UOpenCV('lena.png').imshow().calcHist().equalizeHist_CLAHE().imshow()
+</pre>
+
+If you write like, the data of calcHist cannot be used in the img object.
+
+<pre>
+img1 = UOpenCV('lena.png')
+img2 = img1.equalizeHist_CLAHE()
+</pre>
+
+If so, both pre-processed img1 and post-processed img2 can be used.
+</article>
+
+<h1>Sample program</h1>
+<article class = "content">
+A sample program using UOpenCV is shown below. <br>
+Sample 1
+
+<pre>
+#-*-coding: utf-8-*-
+
+#sample program for UOpenCV
+
+import sys
+
+from UOpenCV import UOpenCV # Load a class from UOpenCV.py
+import UOpenCVUtil
+
+if len(sys.argv) == 2: # Command line, drag and drop support for program files
+    fname = sys.argv [1]
+else: else:
+    fname ='lena.png'
+
+img1 = UOpenCV(fname).imshow().calcHist()
+UOpenCVUtil.showHist(img1, title ='BGR brightness histogram', block = True) # block = True must be displayed properly
+img1.grayscale().imshow().threshold().imshow()
+'''
+UOpenCV(fname)         Image loading
+imshow()               Image display
+calcHist()             Histogram aggregation
+UOpenCVUtil.showHist() Histogram display block = True, so wait until the graph disappears
+grayscale()            Grayscale conversion
+imshow()               Image display
+threshold()            Simple binarization
+imshow()               Image display
+'''
+img1.waitKey() # Wait until there is a key input
+</pre>
+
+Sample 2
+
+<pre>
+#-*-coding: utf-8-*-
+
+#sample program for UOpenCV
+
+import cv2
+from UOpenCV import UOpenCV # Load a class from UOpenCV.py
+
+fname ='spheroidal_graphite_cast_iron.jpg'
+img1 = UOpenCV(fname).imshow().grayscale().medianBlur(ksize = 5).threshold().bitwise_not().labeling_paint(minsize = 100).imshow()
+'''
+UOpenCV(fname)                 Read a file and create an object
+imshow()                       Display image(Japanese title is garbled)
+grayscale()                    Grayscale conversion
+medianBlur(ksize = 5)          Noise removal with median filter
+threshold()                    Simple binarization threshold = 128
+bitwise_not()                  Black and white inversion OPenCV processes "white"
+labeling_paint(minsize = 100)  Label and paint an area of ​​100 or more.
+imshow()                       Display labeling results
+'''
+print(img1.num) # Total number of objects with area>= 100
+print('No x y w h size')
+print(img1.selected_stats) # Output specifications of "object"
+img1.waitKey()
+</pre>
+
+Sample 3
+<pre>
+#-*-coding: utf-8-*-
+
+#sample program for UOpenCV
+import statistics
+
+import cv2
+from UOpenCV import UOpenCV # Load a class from UOpenCV.py
+
+img1 = UOpenCV('colony_count.jpg').imshow().grayscale().threshold().labeling_paint(minsize = 20).imshow()
+
+'''
+UOpenCV('colony_count.jpg')   Read a file and create an object
+imshow()                      Display image(Japanese title is garbled)
+grayscale()                   Grayscale conversion
+threshold()                   Simple binarization threshold = 128
+labeling_paint(minsize = 20)  Label and paint an area of ​​20 or more.
+imshow()                      Display labeling results
+'''
+colony = [x for x in img1.selected_stats [:, 5] if x <100] # Except for oversized ones
+print('individual area')
+print(colony)
+print('number = {} mean = {} median = {} standard deviation = {: 5.1f}'.format(len(colony), statistics.mean(colony), statistics.median(colony), statistics.pstdev(colony)))
+img1.waitKey()
+</pre>
+
+</article>
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class.(C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

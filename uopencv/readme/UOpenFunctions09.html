@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>画像処理　逆FFT変換、画像間演算</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		画像処理　逆FFT変換、画像間演算
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+<h1>逆FFT変換</h1>
+<article class="content">
+<table>
+<tr><th>idft(mask=None)</th></tr>
+<tr><td>
+<div class="exp">逆FFT変換</div>
+<div class="param">mask マスク画像
+                    ２値画像でない場合は、内部で２値化する
+                    指定しない場合は、逆変換のみ行う</div>
+<div class="alert">マスク画像は同じ大きさの画像でなければならない</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>画像間演算</h1>
+<article class="content">
+<table>
+<tr><th>addWeighted(alpha:float, src2, beta:float, gamma:float)</th></tr>
+<tr><td>
+<div class="exp">画像ブレンド
+        画像は同じ大きさ、同じチャンネル数でなければならない
+        dst = self * alpha + src2 * beta + gamma の計算を行う
+        alpha , beta を足して１にする必要はない</div>
+<div class="param">alpha 重み
+UOpenCV src2 演算画像オブジェクト
+beta 重み
+gamma オフセット</div>
+<div class="ret">カラー画像オブジェクトを戻す</div>
+</td></tr>
+
+<tr><th>operation(src2, op:str)</th></tr>
+<tr><td>
+<div class="exp">画像間演算</div>
+<div class="param">src2  演算する画像
+op 演算 演算の種類は以下のとおり
+        ADD
+        SUB
+        MUL
+        DIV
+        ABS
+        MAX
+        MIN
+        AND
+        OR
+        XOR
+</div>
+<div class="ret">カラー画像オブジェクトを戻す</div>
+</td></tr>
+
+</table>
+</article>
+
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>Auxiliary function</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Auxiliary function
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+<h1>Auxiliary function</h1>
+<article class = "content">
+<table>
+<tr><th>imshow (id = None, flags = cv2.WINDOW_NORMAL)</th></tr>
+<tr><td>
+<div class = "exp">Display image
+        Japanese identification characters are garbled</div>
+<div class = "param">id Window identifier
+        Identification characters should not overlap with other display windows
+        If not specified, self._name +'' + self._log [-1] will be used
+flags cv2.WINDOW_NORMAL Window size variable
+      cv2.WINDOW_AUTOSIZE Window size cannot be changed</div>
+</td></tr>
+
+<tr><th>waitKey ()</th></tr>
+<tr><td>
+<div class = "exp">Waiting for key input</div>
+</td></tr>
+
+
+<tr><th>read_lookuptable (fname: str)</th></tr>
+<tr><td>
+<div class = "exp">Read lookup table data
+        Since openCV does not support Japanese file names, it uses xml.etree.ElementTree</div>
+<div class = "param">fname: filename</div>
+<div class = "ret">lookup_table: Lookup table data
+name: The name of the look-up table
+description: description</div>
+<div class = "alert">staticmethod</div>
+<pre>
+lut, name, description = UOpenCV.read_lookuptable(fname)
+</pre>
+</td></tr>
+
+<tr><th>read_2Dfilter (fname: str)</th></tr>
+<tr><td>
+<div class = "exp">Read spatial filter data</div>
+<div class = "param">fname: filename</div>
+<div class = "ret">multiplier: Multiplier: Multiplier
+divisor: divisor
+kernel: kernel
+offset: number to add
+name: The name of the filter
+description: description</div>
+<div class = "alert">staticmethod</div>
+<pre>
+multiplier, divisor, k_mat, offset, name, description = UOpenCV.read_2Dfilter('Spatial filter\\Laplacian\\3x3 Laplacian 1.xml')
+kernel = k_mat * multiplier / divisor
+</pre>
+</td></tr>
+
+<tr><th>blank_image (height: int, width: int, color: int = 0)</th></tr>
+<tr><td>
+<div class = "exp">Create a monochrome image by specifying the height and width</div>
+<div class = "param">height height
+width width
+color color</div>
+<div class = "ret">Returns a color image object</div>
+<div class = "alert">staticmethod</div>
+</td></tr>
+
+</table>
+</article>
+
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class. (C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

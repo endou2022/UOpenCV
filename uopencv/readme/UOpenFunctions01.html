@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>UOpenCV 関数一覧</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		UOpenCV 関数一覧
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+<section>
+<h1>UOpenCV 関数一覧</h1>
+
+<article class="content">
+<table>
+<tr><th>処理</th><th>関数名</th><th>対応するOpenCVの関数</th><th>備考</th></tr>
+<tr><th colspan="4"><a href="UOpenFunctions02.html">コンストラクタ、プロパティー</a></th></tr>
+<tr><td>コンストラクタ</td><td>UOpenCV</td><td></td><td></td></tr>
+<tr><td>ビットマップデータ</td><td>bitmap</td><td></td><td>読み出し専用プロパティー</td></tr>
+<tr><td>ファイル名</td><td>name</td><td></td><td>読み出し専用プロパティー</td></tr>
+<tr><td>データ種類</td><td>kind</td><td></td><td>読み出し専用プロパティー</td></tr>
+<tr><td>画像の幅</td><td>width</td><td></td><td>読み出し専用プロパティー</td></tr>
+<tr><td>画像の高さ</td><td>height</td><td></td><td>読み出し専用プロパティー</td></tr>
+<tr><td>処理履歴</td><td>log</td><td></td><td>読み出し専用プロパティー</td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions02.html">入出力</a></th></tr>
+<tr><td>画像入力</td><td>imread</td><td>cv2.imdecode</td><td>OpenCVの読み込みは日本語パスに対応していない<br>numpy.fromfile</td></tr>
+<tr><td>画像出力</td><td>imwrite</td><td>cv2.imencode</td><td>OpenCVの書き込みは日本語パスに対応していない</td></tr>
+<tr><td>クリップボードからコピー</td><td>load_clipboard</td><td></td><td>実装していない</td></tr>
+<tr><td>クリップボードへコピー</td><td>save_clipboard</td><td></td><td>実装していない</td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions03.html">画素アクセス</a></th></tr>
+<tr><td>(x,y)の画素の値を得る</td><td>getpixel</td><td></td><td></td></tr>
+<tr><td>(x,y)の画素に値を入れる</td><td>setpixel</td><td></td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions03.html">画像計測</a></th></tr>
+<tr><td>3近傍のデータを得る</td><td>get3data</td><td></td><td></td></tr>
+<tr><td>7近傍のデータを得る</td><td>get7data</td><td></td><td></td></tr>
+<tr><td>線上のデータを得る</td><td>get_line_data</td><td></td><td></td></tr>
+<tr><td>輝度ヒストグラム集計</td><td>calcHist</td><td>cv2.calcHist</td><td></td></tr>
+<tr><td>水平方向周辺分布</td><td>projection_distribution_h</td><td></td><td></td></tr>
+<tr><td>垂直方向周辺分布</td><td>projection_distribution_v</td><td></td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions04.html">幾何変換</a></th></tr>
+<tr><td>画像サイズを変更する</td><td>resize</td><td>cv2.resize</td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions04.html">画像変換</a></th></tr>
+<tr><td>グレースケール変換</td><td>grayscale</td><td>cv2.cvtColor</td><td></td></tr>
+<tr><td>モノトーン変換</td><td>monotone</td><td>cv2.cvtColor</td><td></td></tr>
+<tr><td>擬似カラー表示</td><td>applyColorMap</td><td>cv2.applyColorMap</td><td></td></tr>
+<tr><td>色画像分離</td><td>cvtColor</td><td>cv2.cvtColor</td><td></td></tr>
+<tr><td>大域的２値化</td><td>threshold</td><td>cv2.threshold</td><td></td></tr>
+<tr><td>適応的2値化</td><td>adaptiveThreshold</td><td>cv2.adaptiveThreshold</td><td></td></tr>
+<tr><td>FFTを実行しパワースペクトル画像作成</td><td>dft</td><td>cv2.dft</td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions05.html">画像処理　シェーディング補正</a></th></tr>
+<tr><td>黒基準画像を用いたシェーディング補正</td><td>shading_black</td><td></td><td></td></tr>
+<tr><td>白・黒基準画像を用いたシェーディング補正</td><td>shading_white_black</td><td></td><td></td></tr>
+<tr><td>シェーディング補正(凹凸係数)</td><td>shading_unevenness</td><td></td><td></td></tr>
+<tr><td>シェーディング補正(モルフォロジー演算)</td><td>shading_blackhat</td><td>cv2.morphologyEx<br>cv2.bitwise_not</td><td>cv2.MORPH_BLACKHAT</td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions05.html">画像処理　ヒストグラム変換</a></th></tr>
+<tr><td>輝度コントラスト制限適応ヒストグラム平坦化</td><td>equalizeHist_CLAHE</td><td>cv2.createCLAHE</td><td>カラー画像は輝度のみ</td></tr>
+<tr><td>輝度ヒストグラム平坦化</td><td>equalizeHist</td><td>cv2.equalizeHist</td><td>カラー画像は輝度のみ</td></tr>
+<tr><td>ヒストグラム正規化</td><td>normalize</td><td>cv2.normalize</td><td>カラー画像は輝度のみ</td></tr>
+<tr><td>ヒストグラム拡張</td><td>expand_histogram</td><td></td><td>カラー画像は輝度のみ</td></tr>
+<tr><td>ヒストグラム伸張</td><td>stretch_histogram</td><td></td><td>カラー画像は輝度のみ</td></tr>
+<tr><td>輝度反転</td><td>bitwise_not_brightness</td><td>cv2.bitwise_not</td><td>輝度のみ</td></tr>
+<tr><td>ネガポジ反転</td><td>bitwise_not</td><td>cv2.bitwise_not</td><td></td></tr>
+<tr><td>平均と標準偏差を指定してヒストグラム変更</td><td>convert_histogram_avg_std</td><td></td><td>カラー画像は輝度のみ</td></tr>
+<tr><td>輝度コントラスト、明るさを変更</td><td>convert_contrast_brightness</td><td></td><td>輝度のみ</td></tr>
+<tr><td>コントラスト、明るさを変更</td><td>convertScaleAbs</td><td>cv2.convertScaleAbs</td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions06.html">画像処理　画像フィルタ</a></th></tr>
+<tr><td>空間フィルタ処理</td><td>filter2D</td><td>cv2.filter2D</td><td></td></tr>
+<tr><td>単純平滑化</td><td>blur</td><td>cv2.blur</td><td></td></tr>
+<tr><td>メディアンフィルタ</td><td>medianBlur</td><td>cv2.medianBlur</td><td></td></tr>
+<tr><td>ガウシアンフィルタ</td><td>GaussianBlur</td><td>cv2.GaussianBlur</td><td></td></tr>
+<tr><td>アンシャープフィルタ</td><td>unsharp</td><td></td><td></td></tr>
+<tr><td>バイラテラルフィルタ</td><td>bilateralFilter</td><td>cv2.bilateralFilter</td><td></td></tr>
+<tr><td>エッジプレサービングフィルタ</td><td>edgePreservingFilter</td><td>cv2.edgePreservingFilter</td><td></td></tr>
+<tr><td>細部強調フィルタ</td><td>detailEnhance</td><td>cv2.detailEnhance</td><td></td></tr>
+<tr><td>ノンローカルミーンフィルタ<br>Non-Local Means Filter</td><td>fastNlMeansDenoising</td><td>cv2.fastNlMeansDenoisingColored<br>cv2.fastNlMeansDenoising</td><td></td></tr>
+<tr><td>Sobelフィルタ</td><td>Sobel</td><td>cv2.Sobel</td><td></td></tr>
+<tr><td>Laplacianフィルタ</td><td>Laplacian</td><td>cv2.Laplacian</td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions06.html">画像処理　ルックアップテーブル</a></th></tr>
+<tr><td>ルックアップテーブル処理</td><td>lookup_table</td><td>cv2.LUT</td><td></td></tr>
+<tr><td>ルックアップテーブル処理</td><td>lookup_table_brightness</td><td>cv2.LUT</td><td>輝度のみ</td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理</a></th></tr>
+<tr><td>モルフォロジー処理　収縮(erosion)</td><td>erode</td><td>cv2.erode</td><td>cv2.MORPH_RECT</td></tr>
+<tr><td>モルフォロジー処理　膨張(dilate)</td><td>dilate</td><td>cv2.dilate</td><td>cv2.MORPH_RECT</td></tr>
+<tr><td>モルフォロジー処理</td><td>morphologyEx</td><td>cv2.morphologyEx</td><td>cv2.MORPH_RECT</td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions07.html">画像処理　エッジ検出</a></th></tr>
+<tr><td>モルフォロジー処理</td><td>morphologyGradient</td><td>cv2.dilate<br>cv2.erode<br>cv2.subtract</td><td></td></tr>
+<tr><td>Canny法</td><td>Canny</td><td>cv2.Canny</td><td></td></tr>
+<tr><td>ハフ変換で円を求める</td><td>HoughCircles</td><td>cv2.HoughCircles<br>cv2.circle</td><td></td></tr>
+<tr><td>ハフ変換で線分を求める</td><td>HoughLinesP</td><td>cv2.HoughLinesP<br>cv2.line</td><td></td></tr>
+<tr><td>Fast Line Detector</td><td>FastLineDetector</td><td>cv2.ximgproc.createFastLineDetector<br>fld.detect<br>fld.drawSegments</td><td></td></tr>
+<tr><td>Line Segment Detector</td><td>LineSegmentDetector</td><td>cv2.createLineSegmentDetector<br>lsd .detect<br>lsd.drawSegments</td><td></td></tr>
+<tr><td>ハフ変換で線を求める(古典的ハフ変換)</td><td>HoughLines</td><td>cv2.HoughLines<br>cv2.line</td><td>例題どおり動かない</td></tr>
+<tr><td>findContours</td><td>findContours</td><td>cv2.findContours<br>cv2.drawContours</td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions08.html">画像処理　アート効果</a></th></tr>
+<tr><td>油絵のような画像に変換</td><td>oilPainting</td><td>cv2.xphoto.oilPainting</td><td></td></tr>
+<tr><td>水彩画のような画像に変換</td><td>stylization</td><td>cv2.stylization</td><td></td></tr>
+<tr><td>鉛筆画のような画像に変換</td><td>pencilSketch</td><td>cv2.pencilSketch</td><td></td></tr>
+<tr><td>ポスタリゼーション（減色）</td><td>posterization</td><td>cv2.LUT</td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions08.html">画像処理　２値画像処理</a></th></tr>
+<tr><td>(白い部分の)細線化(スケルトン化) </td><td>thinning</td><td>cv2.ximgproc.thinning</td><td></td></tr>
+<tr><td>白孤立点除去</td><td>solation_point_elimination_white</td><td></td><td></td></tr>
+<tr><td>黒孤立点除去</td><td>solation_point_elimination_black</td><td></td><td></td></tr>
+<tr><td>ラベリング処理 「物体(白)」に色を塗る</td><td>labeling_paint</td><td>cv2.connectedComponentsWithStats</td><td></td></tr>
+<tr><td>ラベリング処理 「物体(白)」を四角形で囲む</td><td>labeling_overlay</td><td>cv2.connectedComponentsWithStats<br>cv2.rectangle</td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions09.html">画像処理　逆FFT変換</a></th></tr>
+<tr><td>逆FFT変換</td><td>idft</td><td>cv2.idft</td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions09.html">画像処理　画像間演算</a></th></tr>
+<tr><td>画像ブレンド</td><td>addWeighted</td><td>cv2.addWeighted</td><td></td></tr>
+<tr><td>画像間演算</td><td>operation</td><td>cv2.add<br>
+cv2.subtract<br>
+cv2.multiply<br>
+cv2.divide<br>
+cv2.absdiff<br>
+cv2.max<br>
+cv2.min<br>
+cv2.bitwise_and<br>
+cv2.bitwise_or<br>
+cv2.bitwise_xor
+</td><td></td></tr>
+
+<tr><th colspan="4"><a href="UOpenFunctions10.html">補助関数</a></th></tr>
+<tr><td>画像を表示する</td><td>imshow</td><td>cv2.imshow</td><td></td></tr>
+<tr><td>キー入力待ち</td><td>waitKey</td><td>cv2.waitKey(0)<br>cv2.destroyAllWindows()</td><td></td></tr>
+<tr><td>ルックアップテーブルのデータを読み込む</td><td>read_lookuptable</td><td></td><td>@staticmethod</td></tr>
+<tr><td>空間フィルタのデータを読み込む</td><td>read_2Dfilter</td><td></td><td>@staticmethod</td></tr>
+<tr><td>高さと幅を指定して単色の画像を作る</td><td>blank_image</td><td></td><td>@staticmethod<br>numpy.full</td></tr>
+
+</table>
+</article>
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

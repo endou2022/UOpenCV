@@ -1,0 +1,206 @@
+/*
+	UOpenCV css
+*/
+
+body {
+	color: black;
+	background: white;
+	background-image: url(./grid.gif);
+	background-repeat: repeat;
+	background-position: right bottom;
+	background-attachment: fixed;
+	margin: 0 1em 0 1em;
+}
+
+header {
+	font-size: 150%;
+	margin: 1em 0 0 0;
+	padding: 0.4em;
+	border: 1px solid black;
+	border-radius: 5px;
+	color: black;
+	font-weight: normal;
+	background: #ddf;
+}
+
+footer {
+	margin: 1em 0;
+	padding: 0.5em;
+	border: 1px solid #999;
+	border-radius: 5px;
+	color: black;
+	font-weight: normal;
+	font-size: 90%;
+	text-align: right;
+	background: aliceblue;
+}
+
+h1 {
+	font-size: 130%;
+	margin: 1em 0 0 1em;
+	padding: 0.4em;
+	border: 1px solid black;
+	border-radius: 5px;
+	color: black;
+	font-weight: bold;
+	background: #ddf;
+}
+
+h2 {
+	font-size: 100%;
+	margin: 1em 0 0 2em;
+	padding: 0.4em;
+	border: 1px solid black;
+	border-radius: 5px;
+	color: black;
+	font-weight: bold;
+	background: #ddf;
+}
+
+.content {
+	margin: 1em 0 0 3em;
+	padding: 0.4em;
+	line-height: 140%;
+}
+
+table {
+	margin: 1em 0 0 0;
+	border-collapse: collapse;
+	font-size: 90%;
+	background-color: white;
+	width: 100%;
+}
+
+caption {
+	border: 1px solid #999;
+	text-align: left;
+	font-size: 110%;
+	font-weight: bold;
+	padding: .2em .5em;
+	background: #bbd;
+}
+
+td, th {
+	border: 1px solid #999;
+	white-space: normal;
+	vertical-align: middle
+}
+
+th {
+	background: #ddf;
+	text-align: left;
+	padding: .2em .5em;
+}
+
+td {
+	padding: 0.5em 0.5em 0.5em 2em;
+}
+
+.stripe tr:nth-child(even) {
+	background: aliceblue;
+}
+
+.stripe tr:nth-child(odd) {
+	background: white;
+}
+
+p {
+	margin: .8em 1em 0 0;
+}
+
+img {
+	vertical-align: middle;
+	border: 0;
+}
+
+pre {
+	margin: 0.2em 0 0 0em;
+	padding: 0.5em;
+	line-height: 120%;
+	background-color: lightgray; /*whitesmoke;*/
+	font-size: 120%;
+	tab-size: 4;
+	-moz-tab-size: 4;
+}
+
+ul, ol {
+	margin: 1em 1em 1em 4em;
+	padding: 0, 0, 0, 1em;
+	align-items: center;
+	justify-content: space-around;
+}
+
+li {
+	margin: 0.5em;
+	line-height: 120%;
+}
+
+hr {
+	margin: 1em 0 1em 0;
+	height: 2px;
+	border: none;
+	border-top: 2px blue dotted;
+}
+
+.error {
+	font-weight: bold;
+	color: red;
+	background: #fee;
+}
+
+.warning, .caution {
+	color: orange;
+	background: lightyellow;
+}
+
+.notice, .attention {
+	color: blue;
+	background: lavender;
+}
+
+.message {
+	color: green;
+	background: #efe;
+}
+
+.small {
+	font-size: 80%;
+}
+
+.right {
+	text-align: right;
+}
+
+.left {
+	text-align: left;
+}
+
+.exp {
+	margin: 0 0 0.5em 0;
+	padding: 0.5em;
+	background: aliceblue;
+	white-space: pre-wrap;
+}
+
+.param {
+	margin: 0 0 0.5em 0;
+	padding: 0.5em;
+	background: lightyellow;
+	white-space: pre-wrap;
+}
+
+.ret {
+	margin: 0 0 0.5em 0;
+	padding: 0.5em;
+	background: lavender;
+	white-space: pre-wrap;
+}
+
+.alert {
+	margin: 0 0 0.5em 0;
+	padding: 0.5em;
+	font-weight: bold;
+	color: red;
+	background: #fee;
+	white-space: pre-wrap;
+}

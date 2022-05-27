@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>画像処理　モルフォロジー処理、エッジ検出</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		画像処理　モルフォロジー処理、エッジ検出
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+<h1>モルフォロジー(形態学)処理</h1>
+<article class="content">
+<table>
+<tr><th>erode(ksize:int=3,iterations:int=1)</th></tr>
+<tr><td>
+<div class="exp">（白い部分の）収縮(erosion)処理
+        ２値画像で利用するがカラー画像でも利用できる
+OpenCVは白の部分に着目して処理を行う</div>
+<div class="param">ksize カーネルサイズ
+        カーネルは、cv2.getStructuringElement() で作るが、UOpenCV は パラメータにcv2.MORPH_RECT を使っている。他に、cv2.MORPH_ELLIPSE , cv2.MORPH_CROSS がある
+iterations 反復回数</div>
+</td></tr>
+
+<tr><th>dilate(ksize:int=3,iterations:int=1)</th></tr>
+<tr><td>
+<div class="exp">（白い部分の）膨張(dilate)処理
+        ２値画像で利用するがカラー画像でも利用できる</div>
+<div class="param">ksize カーネルサイズ
+iterations 反復回数</div>
+</td></tr>
+
+<tr><th>morphologyEx(op:int,ksize:int=3,iterations:int=1)</th></tr>
+<tr><td>
+<div class="exp">（白い部分の）各種モルフォロジー処理 
+        ２値画像で利用するがカラー画像でも利用できる</div>
+<div class="param">op モルフォロジー処理の方法
+        cv2.MORPH_ERODE erode() と同じ
+        cv2.MORPH_DILATE erode() と同じ
+        cv2.MORPH_OPEN 収縮→膨張
+        cv2.MORPH_CLOSE 膨張→収縮
+        cv2.MORPH_GRADIENT 膨張した画像と収縮した画像の差を取る 物体の外郭(境界線)が得られます
+        cv2.MORPH_TOPHAT 入力画像とオープニングした画像の差を取る
+        cv2.MORPH_BLACKHAT 入力画像とクロージングした画像の差を取る
+ksize カーネルサイズ
+iterations 反復回数</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>エッジ検出</h1>
+<article class="content">
+<table>
+<tr><th>morphologyGradient(dilate_ksize:int=3, dilate_it:int=1, erode_ksize:int=3, erode_it:int=0)</th></tr>
+<tr><td>
+<div class="exp">モルフォロジー処理を利用して境界を作る
+        n回膨張した画像から、m回縮小した画像を引く</div>
+<div class="param">dilate_ksize dilate(膨張)のカーネルサイズ
+dilate_it dilateの繰り返し回数
+erode_ksize erode(縮小)のカーネルサイズ
+erode_it erodeの繰り返し回数</div>
+</td></tr>
+
+
+<tr><th>Canny(threshold1:float=50, threshold2:float=150, apertureSize:int=3)</th></tr>
+<tr><td>
+<div class="exp">Canny法
+        カラー画像の場合は内部でグレースケール画像にしてから処理する</div>
+<div class="param">threshold1 最小しきい値 少しづつ大きくして、エッジの数を減らす。連続性の大きさ
+threshold2 最大しきい値 少しづつ大きくして、エッジの数を減らす。この輝度ならばエッジである
+apertureSize ゾーベルフィルタのサイズ 3 , 5 , 7のいずれか</div>
+<div class="ret">２値画像オブジェクトを返す</div>
+<div class="alert">２値画像を返す</div>
+</td></tr>
+
+<tr><th>HoughCircles(method:int=cv2.HOUGH_GRADIENT, dp:float=0.8, minDist:float=50, param1:float=100, param2:float=100, minRadius:int=0, maxRadius:int=0, pcolor=(0,0,255))</th></tr>
+<tr><td>
+<div class="exp">ハフ変換で円を求め、元画像に描画して返す(元画像は変更しない)
+        エッジの勾配を使っているので、ぼかした画像を処理するほうが良い。ぼかし具合によって検出感度が変わる
+        ２値画像は、ぼかさないと検出できない
+        カラー画像の場合は、内部でグレースケール画像にしてから処理する</div>
+<div class="param">method ハフ変換の手法 cv2.HOUGH_GRADIENT and cv2.HOUGH_GRADIENT_ALT
+dp 投票器の解像度 0.8 ～ 1.2 くらい
+minDist 円同士が最低限離れていなければならない距離
+param1 = 100 Canny法のHysteresis処理の閾値
+param2 = 100 円の中心を検出する際の閾値  閾値を低い値にすると円の誤検出が多くなり、高い値にすると未検出が多くなります
+minRadius = 0 検出する円の半径の下限
+maxRadius = 0 検出する円の半径の上限 maxRadius <=0 ならば最大まで
+pcolor 抽出した円を描画する色</div>
+<div class="ret">UOpenCV 抽出した円を描画した画像
+UOpenCV.circles [ [ [円の中心点のx座標, 円の中心点のy座標, 円の半径] ...] ]
+        結果をインスタンスとして追加する</div>
+<div class="alert">２値画像は、ぼかさないと検出できない
+カラー画像を返す</div>
+<pre>
+color = UOpenCV(fname)
+img = color.blur(5).imshow().HoughCircles().imshow()  # <span class='error'>ぼかしを入れることが重要</span>
+print('x\ty\tr')
+for dat in img.circles[0]:
+    x, y, r = dat
+    print('{}\t{}\t{}'.format(x, y, r))
+</pre>
+</td></tr>
+
+<tr><th>HoughLinesP(rho:float=1, theta:float=np.radians(1), threshold:int=100, minLineLength:float=0, maxLineGap:float=0, pcolor=(0,0,255))</th></tr>
+<tr><td>
+<div class="exp">ハフ変換で線分を求め、元画像に描画して返す(元画像は変更しない) 確率的ハフ変換  
+        白い部分の処理を行う。Canny法で輪郭検出をしておくと良い
+        cv2.HoughLinesPは１チャンネル(グレースケール)画像のみ
+        カラー画像の場合は、内部でグレースケール画像にしてから処理する
+        ぼかさなくても処理できる。  ２値画像でもできる</div>
+<div class="param">rho 直角座標点と直線の距離 = 1  ρ = xcosθ + ysinθのρの値。1以上の値を指定する。
+theta 直角座標点と直線の角度 ランダムに線を判断するための回転角。大きくすれば複雑な線を認識する。 ρ = xcosθ + ysinθ のθの値。
+threshold 閾値(直線と判断する投票数)
+minLineLength 直線とみなす最小の長さ
+maxLineGap 同一直線とみなす点間隔の長さ
+pcolor 抽出した円を描画する色</div>
+<div class="ret">UOpenCV 線分が描画された画像
+UOpenCV.lines 線分の始点と終点の座標 (x1, y1) - (x2, y2)
+        結果をインスタンスとして追加する</div>
+<div class="alert">カラー画像を返す</div>
+<pre>
+color = UOpenCV(fname)
+img = color.Canny().HoughLinesP().imshow()
+print('(x1, y1) - (x2, y2)')
+for line in img.lines:
+    x1, y1 , x2, y2 = line[0]
+    print('({}, {}) - ({}, {})'.format(x1, y1 , x2, y2))
+</pre>
+</td></tr>
+
+<tr><th>FastLineDetector(length_threshold=5, distance_threshold=1.41421356, canny_th1=50, canny_th2=150, canny_aperture_size=3, do_merge=False, pcolor=(0,0,255))</th></tr>
+<tr><td>
+<div class="exp">Fast Line Detector 線分検出
+        カラー画像の場合は、内部でグレースケール画像にしてから処理する
+        ぼかさなくても処理できる。  ２値画像でもできる</div>
+<div class="param">ength_threshold - 長さ閾値 これより短いセグメントは破棄されます
+distance_threshold - 距離閾値 これより遠い仮説線分から配置されたポイントは、外れ値と見なされます。
+canny_th1 - Cannyヒステリシス1 Canny()のヒステリシス手順の最初のしきい値
+canny_th2 - Cannyヒステリシス1 Canny()のヒステリシス手順の2番目のしきい値
+canny_aperture_size - Cannyソベルオペレータ アパチャーサイズ Canny()のソベルオペレータ アパチャーサイズ
+do_merge - 増分マージオプション Trueの場合、セグメントの増分マージが実行されます
+tuple pcolor 抽出した円を描画する色</div>
+<div class="ret">UOpenCV 線分が描画された画像
+UOpenCV.lines 線分のリスト (x1, y1) - (x2, y2)の組 float型なので注意
+        結果をインスタンスとして追加する</div>
+<div class="alert">カラー画像を返す
+Fast Line Detector は openCV conribution library の ximgprocを利用する
+  pip install opencv-python
+  pip install opencv-contrib-python 
+として、ライブラリをインストールしておく必要がある。同時に入れないと動かないことがあった
+fld.drawSegments() 関数を使うと元画像がグレースケールになるので、UOpenCV では使っていない</div>
+<pre>
+color = UOpenCV(fname)
+img = color.FastLineDetector().imshow()
+print('(x1, y1) - (x2, y2)')
+for line in img.lines:
+    x1, y1 , x2, y2 = line[0]
+    print('({}, {}) - ({}, {})'.format(int(x1), int(y1) , int(x2), int(y2)))
+</pre>
+</td></tr>
+
+<tr><th>LineSegmentDetector(refine=cv2.LSD_REFINE_STD, scale=0.8, sigma_scale=0.6, quant=2.0, ang_th=22.5, log_eps=0, density_th=0.7, n_bins=1024, pcolor=(0,0,255))</th></tr>
+<tr><td>
+<div class="exp">Line Segment Detector(線分検出器)による線分検出
+        カラー画像の場合は、内部でグレースケール画像にしてから処理する
+        ぼかさなくても処理できる。  ２値画像でもできる</div>
+<div class="param">(引数の意味はよくわからない)</div>
+<div class="ret">UOpenCV 線分が描画された画像
+UOpenCV.lines 線分のリスト (x1, y1) - (x2, y2)の組 float型なので注意
+        結果をインスタンスとして追加する</div>
+<div class="alert">カラー画像を返す</div>
+<pre>
+color = UOpenCV(fname)
+img = color.imshow().LineSegmentDetector().imshow()
+print('(x1, y1) - (x2, y2)')
+for line in img.lines:
+    x1, y1 , x2, y2 = line[0]
+    print('({}, {}) - ({}, {})'.format(int(x1), int(y1) , int(x2), int(y2)))
+</pre>
+</td></tr>
+
+<tr><th>HoughLines(rho:float=1.0, theta:float=np.pi/180, threshold:int=200, pcolor=(0,0,255))</th></tr>
+<tr><td>
+<div class="exp">ハフ変換で線を求める  古典的ハフ変換 <- 例題どおり動かない
+        HoughLinesは２値画像のみ 事前に細線化、または、エッジ検出しておく必要がある</div>
+<div class="param">rho 距離分解能
+theta 角度分解能  180なのか360なのか？
+threshold 投票の閾値パラメータ．十分な票を得た直線のみが出力される
+pcolor 描画色</div>
+<div class="ret">UOpenCV 線分が描画された画像
+UOpenCV.lines 直線のベクトル (rho, theta)． rho は原点（画像の左上コーナー）からの距離， theta はラジアン単位で表される直線の回転角度
+        結果をインスタンスとして追加する</div>
+<div class="alert">カラー画像を返す</div>
+</td></tr>
+
+<tr><th>findContours(mode:int=cv2.RETR_TREE, method:int=cv2.CHAIN_APPROX_SIMPLE, minsize:int=100, pcolor=(255,255,255), thickness:int=1)</th></tr>
+<tr><td>
+<div class="exp">輪郭線を抽出して描画する(輪郭化として利用)
+        findContoursは２値画像のみ
+        縁が白くなる</div>
+<div class="param">mode 輪郭を検索する方法 cv2.RETR_TREE , cv2.RETR_EXTERNAL
+method 輪郭を近似する方法 cv2.CHAIN_APPROX_SIMPLE 
+minsize 最小サイズ　ノイズを除去する
+pcolor 描画色
+thickness 線幅</div>
+<div class="ret">UOpenCV 輪郭が描画された画像
+UOpenCV.contours 抽出された輪郭のリスト
+UOpenCV.hierarchy 階層構造
+        結果をインスタンスとして追加する</div>
+<div class="alert">カラー画像を返す</div>
+<pre>
+bin = UOpenCV(fname).grayscale().threshold()
+img = bin.imshow().findContours().imshow()
+</pre>
+</td></tr>
+</table>
+</article>
+
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

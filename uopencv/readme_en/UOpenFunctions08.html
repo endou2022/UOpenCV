@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>Image processing Art effect, binary image processing</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Image processing Art effect, binary image processing
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+<h1>Art effect</h1>
+<article class = "content">
+<table>
+<tr><th>oilPainting (size: int = 3, dynRatio: int = 5)</th></tr>
+<tr><td>
+<div class = "exp">Convert to an oil painting-like image</div>
+<div class = "param">size The size of the proximity area
+dynRatio Image smoothness</div>
+</td></tr>
+
+<tr><th>stylization (sigma_s: float = 60, sigma_r: float = 0.5)</th></tr>
+<tr><td>
+<div class = "exp">Convert to a watercolor-like image</div>
+<div class = "param">sigma_s Range between 0 to 200 sigma spatial Proximity area size
+sigma_r Range between 0 to 1 sigma range Averages different colors in the neighborhood. Increasing sigma_r will increase the area of ​​a particular color.</div>
+</td></tr>
+
+<tr><th>pencilSketch (sigma_s: float = 60, sigma_r: float = 0.07, shade_factor: float = 0.02)</th></tr>
+<tr><td>
+<div class = "exp">Convert to an image like a pencil drawing</div>
+<div class = "param">sigma_s Range between 0 to 200 sigma spatial Proximity area size
+sigma_r Range between 0 to 1 sigma range Averages different colors in the neighborhood. Increasing sigma_r will increase the area of ​​a particular color.
+shade_factor Range between 0 to 0.1 A parameter that adjusts the brightness. The closer it is to 0, the darker it is, and the closer it is to 1, the brighter it is.</div>
+</td></tr>
+
+<tr><th>posterization (n: int)</th></tr>
+<tr><td>
+<div class = "exp">Posterization (color reduction)
+        Set the number of colors to n for all RGB channels.</div>
+<div class = "param">n number of color reductions (reduces colors to n gradations)</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>Binary image processing</h1>
+<article class = "content">
+<table>
+<tr><th>thinning (thinningType: int = cv2.ximgproc.THINNING_ZHANGSUEN)</th></tr>
+<tr><td>
+<div class = "exp">(white part) thinning (skeletonization)
+OpenCV focuses on the white part and processes it</div>
+<div class = "param">thinningType thinning method cv2.ximgproc.THINNING_ZHANGSUEN, cv2.ximgproc.THINNING_GUOHALL</div>
+<div class = "alert">thinning uses ximgproc of openCV conribution library
+ pip install opencv-python
+ pip install opencv-contrib-python
+As, it is necessary to install the library. Sometimes it didn't work unless I put it in at the same time.</Div>
+</td></tr>
+
+<tr><th>solaration_point_elimination_white ()</th></tr>
+<tr><td>
+<div class = "exp">White isolated point removal</div>
+</td></tr>
+
+<tr><th>solaration_point_elimination_black ()</th></tr>
+<tr><td>
+<div class = "exp">Black isolated point removal</div>
+</td></tr>
+
+<tr><th>labeling_paint (minsize: int, pcolor = (0,0,255))</th></tr>
+<tr><td>
+<div class = "exp">Labeling process Color "object (white)"</div>
+<div class = "param">minsize Minimum size of object
+pcolor fill color (B, G, R)</div>
+<div class = "ret">UOpenCV filled image
+UOpenCV.num Number of "objects (white)"
+UOpenCV.labels Label-numbered array (same size as input image) Not filtered by size
+UOpenCV.selected_stats Coordinates and area (number of pixels) for each object
+        label_num, x, y, w, h, size x, y, w, h are the x-coordinate, y-coordinate, height, width, and size of the upper left of the circumscribed rectangle of the object, and size is the area (pixcel).
+        label_num is not contiguous
+UOpenCV.selected_centroids Center of gravity coordinates for each object (label_num, x0, y0)
+        Add the result as an instance</div>
+<div class = "alert">Returns a color image</div>
+<pre>
+bin = UOpenCV(fname).grayscale().threshold().bitwise_not().imshow()
+bin2 = bin.labeling_paint(2000).imshow()
+print(bin2.selected_stats,'\n')
+print(bin2.selected_centroids)
+</pre>
+</td></tr>
+
+<tr><th>labeling_overlay (minsize: int, pcolor = (0,0,255))</th></tr>
+<tr><td>
+<div class = "exp">Labeling process "Object (white)" is surrounded by a rectangle</div>
+<div class = "param">minisize Minimum size
+pcolor Drawing color (B, G, R)</div>
+<div class = "ret">UOpenCV labeled image
+UOpenCV.num Number of "objects (white)"
+UOpenCV.labels Label-numbered array (same size as input image) Not filtered by size
+UOpenCV.selected_stats Coordinates and area (number of pixels) per object Not filtered by size
+        label_num, x, y, w, h, size x, y, w, h are the x-coordinate, y-coordinate, height, width, and size of the upper left of the circumscribed rectangle of the object, and size is the area (pixcel).
+np.ndarray selected_centroids Center of gravity coordinates for each object (label_num, x, y) Not filtered by size
+        Add the result as an instance</div>
+<div class = "alert">Returns a color image</div>
+<pre>
+bin = UOpenCV(fname).grayscale().threshold().bitwise_not().imshow()
+bin2 = bin.labeling_overlay(2000).imshow()
+print(bin2.selected_stats,'\n')
+print(bin2.selected_centroids)
+</pre>
+</td></tr>
+
+</table>
+</article>
+
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class.(C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

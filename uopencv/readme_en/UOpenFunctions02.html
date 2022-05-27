@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>Constructor, properties, I / O</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Constructor, properties, input / output
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+<h1>Constructor</h1>
+<article class = "content">
+<table>
+<tr><th>UOpenCV (filename = None)</th></tr>
+<tr><td>
+<div class = "exp">constructor</div>
+<div class = "param">filename If you specify a file name, it will be read when you create an object.</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>Properties</h1>
+<article class = "content">
+<table>
+<tr><th>bitmap</th></tr>
+<tr><td>
+<div class = "exp">Bitmap data
+        If you want to write, use _bitmap</div>
+<div class = "alert">Read-only properties</div>
+</td></tr>
+
+<tr><th>name</th></tr>
+<tr><td>
+<div class = "exp">file name
+        Set at load time</div>
+<div class = "alert">Read-only properties</div>
+</td></tr>
+
+<tr><th>kind</th></tr>
+<tr><td>
+<div class = "exp">Image type
+        enum ('no_data','color','gray','binary','fft', ...)</div>
+<div class = "alert">Read-only properties</div>
+</td></tr>
+
+<tr><th>width</th></tr>
+<tr><td>
+<div class = "exp">image width</div>
+<div class = "alert">Read-only properties</div>
+</td></tr>
+
+<tr><th>height</th></tr>
+<tr><td>
+<div class = "exp">Image height</div>
+<div class = "alert">Read-only properties</div>
+</td></tr>
+
+<tr><th>log</th></tr>
+<tr><td>
+<div class = "exp">Processing history
+        It records the history processed in list format</div>
+<div class = "alert">Read-only properties</div>
+</td></tr>
+
+
+</table>
+</article>
+
+<h1>Input / output</h1>
+<article class = "content">
+<table>
+<tr><th>imread (filename: str)</th></tr>
+<tr><td>
+<div class = "exp">Image input The file that can be read is the format allowed by cv2.imdecode.
+        Windows bitmaps, JPEG, Portable Network Graphics, WebP
+        Raises an exception if unreadable
+        gif files cannot be read
+        cv2.imread cannot be read if Japanese is entered in the path (ver.4.5), so numpy is used to read the file.
+</div>
+<div class = "param">filename: image filename</div>
+<pre>
+img = UOpenCV ()
+try: try:
+    img.imread ('lena.png')
+except Exception as e:
+    print (e)
+</pre>
+</td></tr>
+
+<tr><th>imwrite (filename: str)</th></tr>
+<tr><td>
+<div class = "exp">Image output
+        Save to file The format is automatically determined by the extension. PNG format recommended
+        Raises an exception if not writable
+        In cv2.imwrite, the image name is garbled when Japanese is entered in the path, so format is adjusted using cv2.imencode and output as a file</div>
+<div class = "param">filename: image name
+        You can't create a directory</div>
+</td></tr>
+
+<tr><th>load_clipboard ()</th></tr>
+<tr><td>
+<div class = "exp">Copy image data from clipboard</div>
+<div class = "alert">Not implemented</div>
+</td></tr>
+
+<tr><th>save_clipboard ()</th></tr>
+<tr><td>
+<div class = "exp">Copy image data to clipboard</div>
+<div class = "alert">Not implemented</div>
+</td></tr>
+
+
+</table>
+</article>
+
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class. (C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

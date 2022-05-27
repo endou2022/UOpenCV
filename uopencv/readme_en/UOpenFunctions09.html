@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>Image processing: Inverse FFT conversion, inter-image calculation</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Image processing: Inverse FFT conversion, inter-image calculation
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+<h1>Inverse FFT transform</h1>
+<article class = "content">
+<table>
+<tr><th>idft (mask = None)</th></tr>
+<tr><td>
+<div class = "exp">Inverse FFT transform</div>
+<div class = "param">mask mask image
+                    If it is not a binary image, it is binarized internally.
+                    If not specified, only reverse conversion is performed</div>
+<div class = "alert">Mask image must be the same size image</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>Inter-image operation</h1>
+<article class = "content">
+<table>
+<tr><th>addWeighted (alpha: float, src2, beta: float, gamma: float)</th></tr>
+<tr><td>
+<div class = "exp">Image blend
+        Images must be the same size and have the same number of channels
+        Calculate dst = self * alpha + src2 * beta + gamma
+        It is not necessary to add alpha and beta to 1</div>
+<div class = "param">alpha weight
+UOpenCV src2 Arithmetic image object
+beta weight
+gamma offset</div>
+<div class = "ret">Return color image object</div>
+</td></tr>
+
+<tr><th>operation (src2, op: str)</th></tr>
+<tr><td>
+<div class = "exp">Inter-image operation</div>
+<div class = "param">src2 Image to be calculated
+op Operation The types of operation are as follows.
+        ADD
+        SUB
+        MUL
+        DIV
+        ABS
+        MAX
+        MIN
+        AND AND
+        OR
+        XOR
+</div>
+<div class = "ret">Return color image object</div>
+</td></tr>
+
+</table>
+</article>
+
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class. (C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

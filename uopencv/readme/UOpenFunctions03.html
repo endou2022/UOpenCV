@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>画素アクセス、画像計測</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		画素アクセス、画像計測
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+<h1>画素アクセス</h1>
+<article class="content">
+<table>
+<tr><th>getpixel(x: int , y:int)</th></tr>
+<tr><td>
+<div class="exp">(x,y)の画素の値を得る</div>
+<div class="param">(x,y) 座標</div>
+<div class="ret">ピクセルの値</div>
+</td></tr>
+
+<tr><th>setpixel(x: int, y: int, b: int, g: int=0, r: int=0)</th></tr>
+<tr><td>
+<div class="exp">(x,y)の画素に値を入れる</div>
+<div class="param">(x,y) 座標
+(b,g,r) 値</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>画像計測</h1>
+<article class="content">
+<table>
+<tr><th>get3data(x: int, y: int)</th></tr>
+<tr><td>
+<div class="exp">3近傍のデータを得る
+        1行(Y軸)ごとにnp.ndarrayで出力される
+        2次元データの場合 data[y][x]でアクセス
+        3次元データの場合 data[y][x][B|G|R]でアクセス
+        bitmap[top : bottom , left : right]でスライスしている</div>
+<div class="param">(x,y) 中心座標</div>
+<div class="ret">np.ndarray</div>
+<pre>
+color = UOpenCV(fname)
+print(color.get3data(100,100))
+</pre>
+<pre>
+[[[ 95  90 200]   (x-1列,y-1行)
+  [100  89 203]   (x  列,y-1行)
+  [ 90  92 208]]  (x+1列,y-1行)
+
+ [[ 87  85 194]   (x-1列,y 行)
+  [ 96  84 198]   (x  列,y 行)
+  [ 93  87 203]]  (x+1列,y 行)
+
+ [[ 91  86 190]   (x-1列,y+1行)
+  [ 85  82 189]   (x  列,y+1行)
+  [ 92  82 197]]] (x+1列,y+1行)
+</pre>
+</td></tr>
+
+<tr><th>get7data(x: int, y: int)</th></tr>
+<tr><td>
+<div class="exp">近傍のデータを得る
+        1行(Y軸)ごとにnp.ndarrayで出力される
+        2次元データの場合 data[y][x]でアクセス
+        3次元データの場合 data[y][x][B|G|R]でアクセス</div>
+<div class="param">(x,y) 中心座標</div>
+<div class="ret">np.ndarray </div>
+</td></tr>
+
+<tr><th>get_line_data(bx: int, by: int, ex: int, ey: int)</th></tr>
+<tr><td>
+<div class="exp">線上のデータを得る</div>
+<div class="param">(bx,by) 始点
+(ex,ey) 終点</div>
+<div class="ret">self.x_axis , self.y_axis 軸
+self.value_b  gray , binary , HSLなど1チャンネルのみの画像
+              color(b) , fft(real) データ
+self.value_g  color(g) , fft(imaginary) データ
+self.value_r  color(r) データ</div>
+<pre>
+color = UOpenCV(fname)
+data = color.get_line_data(100,100,200,150)
+UOpenCVUtil.showLine(data, 'color line', '線上の分布', True)
+print('B mean = {:4.1f}, std = {:4.1f}, median = {:4.1f}, max = {:3d}, min = {:3d}'.format(data.mean_b, data.std_b, data.median_b, data.max_b, data.min_b))
+print('G mean = {:4.1f}, std = {:4.1f}, median = {:4.1f}, max = {:3d}, min = {:3d}'.format(data.mean_g, data.std_g, data.median_g, data.max_g, data.min_g))
+print('R mean = {:4.1f}, std = {:4.1f}, median = {:4.1f}, max = {:3d}, min = {:3d}'.format(data.mean_r, data.std_r, data.median_r, data.max_r, data.min_r))
+
+</pre>
+</td></tr>
+
+<tr><th>calcHist(bx:int=0, by:int=0, ex:int=0, ey:int=0)</th></tr>
+<tr><td>
+<div class="exp">ヒストグラムを集計する</div>
+<div class="param">(bx, by)->(ex,ey) 指定範囲
+        引数を省略した場合(すべて 0 の場合)は、全領域</div>
+<div class="ret">self.hist_b , self.hist_g , self.hist_r  ヒストグラムのデータ
+self.dist_array  集計結果をリストにしたもの
+self.dist_stat   平均、標準偏差、中央値、変動率(%)をリストにしたもの</div>
+<pre>
+color = UOpenCV(fname)
+data = color.calcHist(100,100,200,150)
+UOpenCVUtil.showHist(data, title='colorヒストグラム',block=True)
+print(data.dist_stat)
+</pre>
+</td></tr>
+
+<tr><th>projection_distribution_h(bx:int=0, by:int=0, ex:int=0, ey:int=0)</th></tr>
+<tr><td>
+<div class="exp">水平方向周辺分布</div>
+<div class="param">(bx, by)->(ex,ey) 指定範囲
+        引数を省略した場合(すべて 0 の場合)は、全領域</div>
+<div class="ret">self.array_y , self.array_b , self.array_g , self.array_r  ヒストグラムのデータ
+self.dist_array  集計結果をリストにしたもの
+self.dist_stat   平均、標準偏差、中央値、最大値、最小値をリストにしたもの</div>
+<pre>
+color = UOpenCV(fname)
+data = color.projection_distribution_h()
+UOpenCVUtil.showDist(data, title='color水平周辺分布', block=True)
+print(data.dist_stat)
+</pre>
+</td></tr>
+
+<tr><th>projection_distribution_v(bx:int=0, by:int=0, ex:int=0, ey:int=0)</th></tr>
+<tr><td>
+<div class="exp">垂直方向周辺分布</div>
+<div class="param">(bx, by)->(ex,ey) 指定範囲
+        引数を省略した場合(すべて 0 の場合)は、全領域</div>
+<div class="ret">self.array_x , self.array_b , self.array_g , self.array_r  ヒストグラムのデータ
+self.dist_array  集計結果をリストにしたもの
+self.dist_stat   平均、標準偏差、中央値、最大値、最小値をリストにしたもの</div>
+</td></tr>
+
+</table>
+</article>
+
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

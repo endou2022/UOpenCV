@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>UOpenCV class</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Introduction
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction</a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class</a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list</a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output</a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement</a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation</a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion</a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table</a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection</a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing</a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation</a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions</a></li>
+<li><a href="UOpenFunctions11.html">Histogram display</a></li>
+</ul>
+</nav>
+
+<section>
+<h1>Introduction</h1>
+<pre style = "margin: 0.2em 0 0 4em; background-color: white;">
+[Software name]      UOpenCV
+                     opencv-python wrapper class
+[Copyright / Author] FINAL<img alt = "mail address" src = "addr.png">
+[Supported OS]       Probably OS independent
+[Operation check]    Windows 10
+[Created]            2022/10/01
+[Necessary items]    Python
+                     opencv-python
+                     opencv-contrib-python (opencv-python and opencv-contrib-python must be included at the same time)
+[Type]               Free software
+[License]            <a href="https://www.weblio.jp/content/BSD%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9">BSD license</a>(2021/09/30)
+[Install]            Install with "pip install UOpenCV" or download UOpenCV.py .
+</pre>
+<h2>Features</h2>
+<ul>
+<li>UOpenCV is a wrapper class for OpenCV. <span style="color:red;font-weight:bold;">Some of the functions of opencv-python (+ image processing in books and homepages) have been made into classes</span> to make them easier to use (for the author).</li>
+<li>This is a class created to create image processing software. Since it is independent of image processing software, you can create various software using classes.</li>
+<li>Most functions return an image object (UOpenCV), so you can create a method chain.</li>
+<li>As a general rule, methods are called with name arguments.</li>
+<li>Most function parameters have been adjusted and can be used with the defaults.</li>
+<li>I have confirmed the operation, but the author does not take any responsibility even if any problem occurs in this program. (Author's disclaimer)</li>
+</ul>
+
+<h2>Customize</h2>
+<ul>
+<li>Since it is programmed with python, it can be easily modified.</li>
+</ul>
+
+<h2>About support</h2>
+<ul>
+<li>I do not support. Please use only those who can use it at their own risk. (No warranty)</li>
+<li>I don't think I can answer the question by email.</li>
+<li>This document is a memory of the author.</li>
+</ul>
+
+<h2>Update history</h2>
+<ul>
+<li>ver.1.0 2022/10/01 Completely revised as a wrapper for OpenCV using opencv-python<br>
+                   Renamed UOpenCV from UBitmap<br>
+                   Version No. was reset</li>
+<li>5.4 11/03/20 Last version for C ++ Builder</li>
+<li>5.0 07/11/14 Integrated color and grayscale classes</li>
+<li>4.0 06/02/15 Separation of messed up color / grayscale processing etc.</Li>
+<li>3.0 04/06/16 The TForm2 class of AT-Image ver.2.5 has been completely revised and made independent as a class (UBitmap)<br>
+                   Borland's VCL class name starts with "T", so I named it "U" Bitmap<br>
+                   Version starts from 3.0 to match AT-Image<br>
+                   Class library for C ++ Builder</li>
+<li>2.0 99/05/05 Complete review of AT-Image specifications (MDI, etc.)</li>
+<li>1.0 98/05/14 AT-Image (image processing software) initial version<br>
+                   Software made with C ++ Builder</li>
+</ul>
+
+<h2>Acknowledgments</h2>
+<div style="margin: 0.2em 0 0 4em;">
+I would like to thank those who are developing OpenCV.<br>
+The homepage that I referred to when creating the program is written in the source file. The date in brackets is the date when I browsed the homepage.<br>
+I would like to thank all the people who have released the technical information.</div>
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class. (C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

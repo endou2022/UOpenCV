@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>UOpenCVBase</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		UOpenCVクラスの使用方法
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+		</article>
+
+		<h1>メソッドの使用上の注意</h1>
+		<article class="content">
+		メソッドの呼び出しは、原則として名前引数で行う。<br>
+		デフォルトの引数は（一部を除き）調整してあるので、指定しなくても良い。<br>
+		引数の妥当性は検査していないので、メソッドを呼び出す側で適切な引数を与えるようにする必要がある。<br>
+		メソッドの名前は原則としてOpenCVに合わせている。<br>
+		ほとんどのメソッドは自分自身は変更せず、UOpenCVオブジェクトを新規に作成し、処理結果を入れて返す。
+<pre>
+img = UOpenCV('lena.png')                   # 1
+img.imshow()                                # 1  オブジェクトは変更されない
+img = img.calcHist()                        # 1  インスタンスが追加される
+img = img.equalizeHist_CLAHE()              # 2  別のオブジェクトが返される。前の行までに追加されたインスタンスはコピーされない
+img.imshow()                                # 2  オブジェクトは変更されない
+</pre>
+のように、注意しないとオブジェクトが変わったことに気づかない
+<pre>
+img = UOpenCV('lena.png').imshow().calcHist().equalizeHist_CLAHE().imshow()
+</pre>
+のように書くと、img オブジェクトで、calcHist のデータは利用できない。
+<pre>
+img1 = UOpenCV('lena.png')
+img2 = img1.equalizeHist_CLAHE()
+</pre>
+とすれば、処理前 img1 、処理後 img2 の両方が利用できる。
+		</article>
+
+		<h1>サンプルプログラム</h1>
+		<article class="content">
+		UOpenCVを利用したサンプルプログラムを示します。<br>
+サンプル１
+<pre>
+# -*- coding:utf-8 -*-
+
+# sample program for UOpenCV
+
+import sys
+
+from UOpenCV import UOpenCV  # UOpenCV.pyからクラスを読み込む
+import UOpenCVUtil
+
+if len(sys.argv) == 2:       # コマンドライン、プログラムファイルへのドラッグ＆ドロップ対応
+    fname = sys.argv[1]
+else:
+    fname = 'lena.png'
+
+img1 = UOpenCV(fname).imshow().calcHist()
+UOpenCVUtil.showHist(img1, title='BGR輝度ヒストグラム', block=True)  # block=Trueでないとうまく表示できない
+img1.grayscale().imshow().threshold().imshow()
+'''
+UOpenCV(fname)           画像読み込み
+imshow()                 画像表示
+calcHist()               ヒストグラム集計
+UOpenCVUtil.showHist()   ヒストグラム表示  block=True なので、グラフを消すまで待機
+grayscale()              グレースケール変換
+imshow()                 画像表示
+threshold()              単純2値化
+imshow()                 画像表示
+'''
+img1.waitKey()  # キー入力があるまで待つ
+</pre>
+
+サンプル２
+<pre>
+# -*- coding:utf-8 -*-
+
+# sample program for UOpenCV
+
+import cv2
+from UOpenCV import UOpenCV  # UOpenCV.pyからクラスを読み込む
+
+fname = '球状黒鉛鋳鉄.jpg'
+img1 = UOpenCV(fname).imshow().grayscale().medianBlur(ksize=5).threshold().bitwise_not().labeling_paint(minsize=100).imshow()
+'''
+UOpenCV(fname)               ファイルを読み込んでオブジェクトを作る
+imshow()                     画像を表示（タイトルの日本語は文字化けする）
+grayscale()                  グレースケール変換
+medianBlur(ksize=5)          メディアンフィルタでノイズ除去
+threshold()                  単純2値化　閾値=128
+bitwise_not()                白黒反転　OPenCVは「白」を処理する
+labeling_paint(minsize=100)  面積100以上をラベリングして色を塗る
+imshow()                     ラベリング結果の表示
+'''
+print(img1.num)              # 面積>=100 の物体の総数
+print('No  x  y  w  h  size')
+print(img1.selected_stats)   #「物体」の諸元出力
+img1.waitKey()
+</pre>
+
+サンプル３
+<pre>
+# -*- coding:utf-8 -*-
+
+# sample program for UOpenCV
+import statistics
+
+import cv2
+from UOpenCV import UOpenCV  # UOpenCV.pyからクラスを読み込む
+
+img1 = UOpenCV('colony_count.jpg').imshow().grayscale().threshold().labeling_paint(minsize=20).imshow()
+
+'''
+UOpenCV('colony_count.jpg')  ファイルを読み込んでオブジェクトを作る
+imshow()                     画像を表示（タイトルの日本語は文字化けする）
+grayscale()                  グレースケール変換
+threshold()                  単純2値化　閾値=128
+labeling_paint(minsize=20)   面積20以上をラベリングして色を塗る
+imshow()                     ラベリング結果の表示
+'''
+colony = [x for x in img1.selected_stats[:, 5] if x < 100]  # 大きすぎるものを除く
+print('個々の面積')
+print(colony)
+print('個数 = {} 平均 = {} 中央値 = {} 標準偏差={:5.1f}'.format(len(colony), statistics.mean(colony), statistics.median(colony), statistics.pstdev(colony)))
+img1.waitKey()
+</pre>
+
+		</article>
+
+	</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

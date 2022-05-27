@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>Geometric transformation, image transformation </title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Geometric transformation, image transformation
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+<h1>Geometric transformation </h1>
+<article class = "content">
+<table>
+<tr><th>resize (fx: float, fy: float, interpolation = cv2.INTER_NEAREST) ​​</th></tr>
+<tr><td>
+<div class = "exp">Change image size </div>
+<div class = "param">fx, fy Magnification (Note that it is not the size after reduction)
+interpolation Interpolation method
+       cv2.INTER_NEAREST: Nearest Neighbor Interpolation
+       cv2.INTER_LINEAR: Bilinear interpolation
+       cv2.INTER_CUBIC: Bicubic interpolation
+       cv2.INTER_AREA: Resampling using pixel area relationships
+       cv2.INTER_LANCZOS4: Lanczos Interpolation </div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>Image conversion </h1>
+<article class = "content">
+<table>
+<tr><th>grayscale () </th></tr>
+<tr><td>
+<div class = "exp">Grayscale conversion </div>
+</td></tr>
+
+<tr><th>monotone (b: int, g: int, r: int) </th></tr>
+<tr><td>
+<div class = "exp">Monotone conversion
+        Change hue and saturation while keeping brightness </div>
+<div class = "param">(b, g, r) Convert color np.uint8 only </div>
+</td></tr>
+
+<tr><th>applyColorMap (colormap: int = cv2.COLORMAP_JET) </th></tr>
+<tr><td>
+<div class = "exp">Pseudo color display </div>
+<div class = "param">colormap colormap number
+        cv2.COLORMAP_AUTUMN
+        cv2.COLORMAP_BONE
+        cv2.COLORMAP_JET
+        cv2.COLORMAP_WINTER
+        cv2.COLORMAP_RAINBOW
+        cv2.COLORMAP_HOT
+        cv2.COLORMAP_TURBO etc. </Div>
+</td></tr>
+
+<tr><th>cvtColor (code: str) </th></tr>
+<tr><td>
+<div class = "exp">Color image separation </div>
+<div class = "param">code Separation command
+        X (XYZ)
+        Y (XYZ)
+        Z (XYZ)
+        Y (YCrCb) #Brightness
+        Cr (YCrCb)
+        Cb (YCrCb)
+        H (HSV) # Hue Hue
+        S (HSV) #Saturation Saturation Chroma
+        V (HSV) #Brightness Value Brightness
+        H (HLS) # Hue Hue
+        L (HLS) #Brightness Lightness
+        S (HLS) #Saturation Saturation Chroma
+        L (Lab)
+        a (Lab)
+        b (Lab)
+        L (Luv) # CIE Luv In the color space, the range is L [0, 100], u [-100, 100], v [-100, 100]
+        u (Luv)
+        v (Luv)
+        Y (YUV) #Brightness
+        U (YUV)
+        V (YUV)
+        B (BGR)
+        G (BGR)
+        R (BGR) </div>
+<div class = "ret">separated images </div>
+</td></tr>
+
+<tr><th>threshold (thresh: int = 128, type: int = cv2.THRESH_BINARY) </th></tr>
+<tr><td>
+<div class = "exp">Global binarization
+        If it is a color image, it is grayscaled and binarized.
+        If it is a grayscale (1 channel) image, it will be binarized as it is </div>
+<div class = "param">threshold when thresh cv2.THRESH_BINARY
+type Binarization method
+        cv2.THRESH_BINARY threshold Set the value below 0 to 0 and the other values ​​to maxValue (255) to binarize.
+        cv2.THRESH_OTSU Thresh that automatically determines the threshold by Otsu's method is ignored
+        cv2.THRESH_TRIANGLE Triangle algorithm automatically determines threshold thresh is ignored </div>
+<div class = "ret">UOpenCV binarized image object
+UOpenCV.threshold Threshold when calculated automatically </div>
+</td></tr>
+
+<tr><th>adaptiveThreshold (adaptiveMethod: int = cv2.ADAPTIVE_THRESH_MEAN_C, thresholdType: int = cv2.THRESH_BINARY, blockSize: int = 51, C: float = 0) </th></tr>
+<tr><td>
+<div class = "exp">Adaptive binarization
+        If it is a color image, it is grayscaled and binarized.
+        If it is a grayscale (1 channel) image, it will be binarized as it is.
+        Calculate the threshold value in a certain neighborhood area and perform binarization processing in each area </div>
+<div class = "param">adaptiveMethod Algorithm used for adaptive thresholding cv2.ADAPTIVE_THRESH_MEAN_C, cv2.ADAPTIVE_THRESH_GAUSSIAN_C
+        cv2.ADAPTIVE_THRESH_GAUSSIAN_C feels more natural, but considering labeling, cv2.ADAPTIVE_THRESH_MEAN_C seems to be better.
+thresholdType Binarization type cv2.THRESH_BINARY, cv2.THRESH_BINARY_INV
+blockSize Neighborhood size for threshold calculation Odd greater than 1
+C Calculated threshold minus C is used as the final threshold </div>
+</td></tr>
+
+<tr><th>dft () </th></tr>
+<tr><td>
+<div class = "exp">Execute FFT and return power spectrum image
+        If it is a color image, it will be converted to grayscale internally </div>
+<div class = "ret">UOpenCV FFT processed image (image normalized so that it can be displayed) 1-channel image
+UOpenCV._fft_complex Complex data </​​div>
+</td></tr>
+
+
+</table>
+</article>
+
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class. (C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

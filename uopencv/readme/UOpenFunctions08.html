@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>画像処理　アート効果、２値画像処理</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		画像処理　アート効果、２値画像処理
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+<h1>アート効果</h1>
+<article class="content">
+<table>
+<tr><th>oilPainting(size:int=3, dynRatio:int=5)</th></tr>
+<tr><td>
+<div class="exp">油絵のような画像に変換する</div>
+<div class="param">size  近接領域のサイズ
+dynRatio 画像の滑らかさ</div>
+</td></tr>
+
+<tr><th>stylization(sigma_s:float=60, sigma_r:float=0.5)</th></tr>
+<tr><td>
+<div class="exp">水彩画のような画像に変換する</div>
+<div class="param">sigma_s Range between 0 to 200  sigma spatial 近接領域のサイズ
+sigma_r Range between 0 to 1    sigma range   近接領域の異なる色を平均化します。sigma_rを大きくすると、特定の色の領域が広くなります。</div>
+</td></tr>
+
+<tr><th>pencilSketch(sigma_s:float=60, sigma_r:float=0.07,shade_factor:float=0.02)</th></tr>
+<tr><td>
+<div class="exp">鉛筆画のような画像に変換する</div>
+<div class="param">sigma_s Range between 0 to 200  sigma spatial 近接領域のサイズ
+sigma_r Range between 0 to 1    sigma range   近接領域の異なる色を平均化します。sigma_rを大きくすると、特定の色の領域が広くなります。
+shade_factor Range between 0 to 0.1  明るさを調整するパラメータで、0に近いほど暗く、1に近いほど明るくなります。</div>
+</td></tr>
+
+<tr><th>posterization(n:int)</th></tr>
+<tr><td>
+<div class="exp">ポスタリゼーション（減色）
+        RGBの全てのチャンネルで色数を n にする。</div>
+<div class="param">n 減色数 (減色して n 階調にする)</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>２値画像処理</h1>
+<article class="content">
+<table>
+<tr><th>thinning(thinningType:int=cv2.ximgproc.THINNING_ZHANGSUEN)</th></tr>
+<tr><td>
+<div class="exp">(白い部分の)細線化(スケルトン化) 
+OpenCVは白の部分に着目して処理を行う</div>
+<div class="param">thinningType 細線化の方法 cv2.ximgproc.THINNING_ZHANGSUEN , cv2.ximgproc.THINNING_GUOHALL</div>
+<div class="alert">thinning は openCV conribution library の ximgprocを利用する
+ pip install opencv-python
+ pip install opencv-contrib-python 
+として、ライブラリをインストールしておく必要がある。同時に入れないと動かないことがあった</div>
+</td></tr>
+
+<tr><th>solation_point_elimination_white()</th></tr>
+<tr><td>
+<div class="exp">白孤立点除去</div>
+</td></tr>
+
+<tr><th>solation_point_elimination_black()</th></tr>
+<tr><td>
+<div class="exp">黒孤立点除去</div>
+</td></tr>
+
+<tr><th>labeling_paint(minsize:int, pcolor=(0,0,255))</th></tr>
+<tr><td>
+<div class="exp">ラベリング処理  「物体(白)」に色を塗る</div>
+<div class="param">minsize 物体の最小サイズ
+pcolor 塗りつぶす色(B,G,R)</div>
+<div class="ret">UOpenCV 塗りつぶした画像
+UOpenCV.num 「物体(白)」の数
+UOpenCV.labels ラベル番号が振られた配列(入力画像と同じ大きさ)  サイズでフィルタリングしていない
+UOpenCV.selected_stats 物体ごとの座標と面積(ピクセル数)
+        label_num, x, y, w, h, size   x, y, w, h は、物体の外接矩形の左上のx座標、y座標、高さ、幅、size は、面積（pixcel）
+        label_num は連続していない
+UOpenCV.selected_centroids 物体ごとの重心座標 (label_num, x0, y0) 
+        結果をインスタンスとして追加する</div>
+<div class="alert">カラー画像を返す</div>
+<pre>
+bin = UOpenCV(fname).grayscale().threshold().bitwise_not().imshow()
+bin2 = bin.labeling_paint(2000).imshow()
+print(bin2.selected_stats, '\n')
+print(bin2.selected_centroids)
+</pre>
+</td></tr>
+
+<tr><th>labeling_overlay(minsize:int, pcolor=(0,0,255))</th></tr>
+<tr><td>
+<div class="exp">ラベリング処理  「物体(白)」を四角形で囲む</div>
+<div class="param">minisize 最小サイズ
+pcolor 描画色(B,G,R)</div>
+<div class="ret">UOpenCV ラベリングした画像
+UOpenCV.num 「物体(白)」の数
+UOpenCV.labels ラベル番号が振られた配列(入力画像と同じ大きさ)  サイズでフィルタリングしていない
+UOpenCV.selected_stats 物体ごとの座標と面積(ピクセル数)  サイズでフィルタリングしていない
+        label_num, x, y, w, h, size   x, y, w, h は、物体の外接矩形の左上のx座標、y座標、高さ、幅、size は、面積（pixcel）
+np.ndarray selected_centroids 物体ごとの重心座標 (label_num, x, y)   サイズでフィルタリングしていない
+        結果をインスタンスとして追加する</div>
+<div class="alert">カラー画像を返す</div>
+<pre>
+bin = UOpenCV(fname).grayscale().threshold().bitwise_not().imshow()
+bin2 = bin.labeling_overlay(2000).imshow()
+print(bin2.selected_stats, '\n')
+print(bin2.selected_centroids)
+</pre>
+</td></tr>
+
+</table>
+</article>
+
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

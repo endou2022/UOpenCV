@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>Image processing Shading correction, histogram conversion</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Image processing Shading correction, histogram conversion
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+<h1>Shading correction</h1>
+<article class = "content">
+<table>
+<tr><th>shading_black (black_reference, offset: float = 128.0)</th></tr>
+<tr><td>
+<div class = "exp">Shading correction using black reference image
+        Post-processed image = Pre-processed image-Black reference image + Offset calculation</div>
+<div class = "param">black_reference Black reference image
+offset offset</div>
+<div class = "alert">The black reference image must be a color image (3 channel image) of the same size</div>
+</td></tr>
+
+<tr><th>shading_white_black (white_reference, black_reference, multi: float = 255.0)</th></tr>
+<tr><td>
+<div class = "exp">Shading correction using white / black reference image
+        Image after processing = (Image before correction --Black reference image) / (White reference image --Black reference image) * Calculate nulti</div>
+<div class = "param">white_reference White reference image
+black_reference Black reference image
+multi Magnification</div>
+<div class = "alert">The white / black reference image must be a color image (3-channel image) of the same size</div>
+</td></tr>
+
+<tr><th>shading_unevenness (ksize: int = 31)</th></tr>
+<tr><td>
+<div class = "exp">Shading correction (unevenness coefficient)
+        Variable threshold formula binarization method (unevenness coefficient) that can set a good threshold for shading images
+        Divide the original image by the image simply smoothed (blur()) by the kernel size</div>
+<div class = "param">ksize kernel size</div>
+</td></tr>
+
+<tr><th>shading_blackhat (ksize: int = 15)</th></tr>
+<tr><td>
+<div class = "exp">Shading correction (morphology calculation)
+        After performing morphology operation (BLACK HAT), perform negative / positive conversion</div>
+<div class = "param">ksize kernel size</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>Histogram conversion</h1>
+<article class = "content">
+<table>
+<tr><th>equalizeHist_CLAHE (clipLimit: float = 40.0, tile: int = 8)</th></tr>
+<tr><td>
+<div class = "exp">Contrast Limited Adaptive Histogram Equalization
+        For color images, change the histogram only for brightness</div>
+<div class = "param">clipLimit The larger the size, the stronger the contrast.
+tile Larger means global flattening, smaller tiles partially flatten</div>
+</td></tr>
+
+<tr><th>equalizeHist ()</th></tr>
+<tr><td>
+<div class = "exp">Histogram flattening
+        For color images, change the histogram only for brightness</div>
+</td></tr>
+
+<tr><th>normalize (alpha: float = 0, beta: float = 255, norm_type: int = cv2.NORM_MINMAX)</th></tr>
+<tr><td>
+<div class = "exp">Histogram normalization
+        For color images, change the histogram only for brightness</div>
+<div class = "param">norm_type = cv2.NORM_MINMAX, alpha – lower bound of range
+                                          beta – Upper bound of range
+                                          Convert the histogram from alpha to beta
+norm_type = cv2.NORM_INF,
+          cv2.NORM_L1,
+          For cv2.NORM_L2 alpha – normalized norm value
+                                          beta – unused</div>
+</td></tr>
+
+<tr><th>expand_histogram (min: float, max: float)</th></tr>
+<tr><td>
+<div class = "exp">Histogram extension
+        Keep the brightness distribution from min to max
+        For color images, change the histogram only for brightness
+        Calculate y'= y_max * (y --min) / (max --min)</div>
+<div class = "param">min, max Put the brightness distribution from min to max</div>
+</td></tr>
+
+<tr><th>stretch_histogram (min1: float, max1: float, min2: float = 0.0, max2: float = 255.0)</th></tr>
+<tr><td>
+<div class = "exp">Histogram expansion
+        For color images, change the histogram only for brightness
+        grad = (max2 --min2) / (max1 --min1)
+        y'= grad * (y --min1) + calculate min2</div>
+<div class = "param">min1, max1 Brightness before enlargement
+min2, max2 Brightness after enlargement</div>
+</td></tr>
+
+<tr><th>bitwise_not_brightness ()</th></tr>
+<tr><td>
+<div class = "exp">Brightness inversion
+        Invert only the brightness
+        Same result as bitwise_not except for color images</div>
+</td></tr>
+
+<tr><th>bitwise_not ()</th></tr>
+<tr><td>
+<div class = "exp">Negative / Positive Inversion
+        Invert 3 channels</div>
+</td></tr>
+
+<tr><th>convert_histogram_avg_std (avg: float = 128, std: float = 32)</th></tr>
+<tr><td>
+<div class = "exp">Change histogram by specifying average and standard deviation of brightness
+        For color images, change the histogram only for brightness
+         y'= (y --mean (y)) * Calculate std / std (y) + avg</div>
+<div class = "param">avg: Average brightness after change
+std: standard deviation of brightness after change</div>
+</td></tr>
+
+<tr><th>convert_contrast_brightness (alpha: float = 1.0, beta: float = 0.0)</th></tr>
+<tr><td>
+<div class = "exp">Change contrast and brightness
+        For color images, change the histogram only for brightness
+        y'= (alpha * (y --127) + 127) + beta calculation</div>
+<div class = "param">alpha 1 & lt; alpha Contrast increase 0 & lt; alpha & lt; 1 Contrast decrease
+beta 0 & lt; beta Brightness increase beta & lt; 0 Brightness decrease</div>
+</td></tr>
+
+<tr><th>convertScaleAbs (alpha: float = 1.0, beta: float = 0)</th></tr>
+<tr><td>
+<div class= "exp">Change contrast and brightness
+         Calculate dst = src * alpha + beta for 3 channels</div>
+<div class = "param">alpha 1 & lt; alpha Contrast increase 0 & lt; alpha & lt; 1 Contrast decrease
+beta 0 & lt; beta Brightness increase beta & lt; 0 Brightness decrease</div>
+</td></tr>
+
+
+</table>
+</article>
+
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class. (C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

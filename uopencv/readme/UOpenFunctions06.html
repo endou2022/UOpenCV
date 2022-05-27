@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>画像処理　画像フィルタ、ルックアップテーブル</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		画像処理　画像フィルタ、ルックアップテーブル
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+<h1>画像フィルタ</h1>
+<article class="content">
+<table>
+<tr><th>filter2D(kernel,offset:float,comment:str='-')</th></tr>
+<tr><td>
+<div class="exp">空間フィルタ処理 （畳み込み演算）
+        すべてのチャンネルに同じフィルタ処理をする</div>
+<div class="param">kernel 畳み込み演算のカーネル
+offset 畳み込み演算後の加算値</div>
+<pre>
+multiplier, divisor, k_mat, offset, name, description = UOpenCV.read_2Dfilter('空間フィルタ\\Laplacian\\3x3 ラプラシアン1.xml')
+kernel = k_mat * multiplier / divisor
+
+color = UOpenCV(fname)
+color.imshow().filter2D(kernel, offset, description).imshow()
+</pre>
+</td></tr>
+
+<tr><th>blur(ksize:int=3)</th></tr>
+<tr><td>
+<div class="exp">単純平滑化</div>
+<div class="param">カーネルの大きさ 奇数のみ</div>
+</td></tr>
+
+<tr><th>medianBlur(ksize:int=5)</th></tr>
+<tr><td>
+<div class="exp">メディアンフィルタ</div>
+<div class="param">ksize カーネルの大きさ 奇数のみ</div>
+</td></tr>
+
+<tr><th>GaussianBlur(ksize:int=5, sigmaX:float=3)</th></tr>
+<tr><td>
+<div class="exp">ガウシアンフィルタ</div>
+<div class="param">ksize カーネルサイズ。1以上～31以下の奇数
+sigmaX 標準偏差</div>
+</td></tr>
+
+<tr><th>unsharp(ksize:int=5, sigmaX:float=3, k:float=1)</th></tr>
+<tr><td>
+<div class="exp">アンシャープフィルタ エッジを残した鮮鋭化
+        元画像から平滑化(ガウシアン)したデータを差く
+        引き算された画像をある定数倍したうえで、入力画像に足す</div>
+<div class="param">ksize ガウシアンフィルタのカーネルサイズ
+sigmaX ガウシアンフィルタの標準偏差
+k 倍率</div>
+</td></tr>
+
+<tr><th>bilateralFilter(d:int=15,sigmaColor:float=25,sigmaSpace:float=25)</th></tr>
+<tr><td>
+<div class="exp">バイラテラルフィルタ
+        エッジを残した平滑化</div>
+<div class="param">d 処理する隣接ピクセル
+sigmaColor 色空間に関する標準偏差　この値が大きいほど、色がより異なるピクセル同士を混合して平滑化を実施
+sigmaSpace 距離空間に関する標準偏差　この値が大きいほど、より遠くのピクセル同士を混合して平滑化
+        デフォルトの引数は、未調整</div>
+</td></tr>
+
+<tr><th>edgePreservingFilter(flags:int=cv2.RECURS_FILTER, sigma_s:float=3.0, sigma_r:float=0.1)</th></tr>
+<tr><td>
+<div class="exp">エッジを保持しつつ平滑化を行うフィルタ
+        OpenCV のマニュアルには、"Input 8-bit 3-channel image" とあるが、グレースケール画像も処理できる</div>
+<div class="param">flags  cv2.RECURS_FILTER or cv2.NORMCONV_FILTER
+sigma_s Range between 0 to 200  sigma spatial 近接領域のサイズ
+sigma_r Range between 0 to 1    sigma range   近接領域の異なる色を平均化します。sigma_rを大きくすると、特定の色の領域が広くなります。</div>
+</td></tr>
+
+<tr><th>detailEnhance(sigma_s:float=10, sigma_r:float=0.15)</th></tr>
+<tr><td>
+<div class="exp">細部強調フィルタ
+カラー画像以外は内部で３チャンネル化している</div>
+<div class="param">sigma_s Range between 0 to 200  sigma spatial 近接領域のサイズ
+sigma_r Range between 0 to 1    sigma range   近接領域の異なる色を平均化します。sigma_rを大きくすると、特定の色の領域が広くなります。</div>
+</td></tr>
+
+<tr><th>fastNlMeansDenoising(self, h:float=10, hColor:float=10, templateWindowSize:int=7, searchWindowSize:int=21)</th></tr>
+<tr><td>
+<div class="exp">ノンローカルミーンフィルタ(Non-Local Means Filter)
+        ノイズ除去に用いる。処理に時間が掛かる
+        内部で fastNlMeansDenoisingColored と fastNlMeansDenoising を使い分けている</div>
+<div class="param">h ノイズ除去の強度
+hColor hと同じにしておく</div>
+</td></tr>
+
+<tr><th>Sobel(dx:int=1, dy:int=0, ksize:int=3, offset:float=128)</th></tr>
+<tr><td>
+<div class="exp">Sobelフィルタ １次微分フィルタ</div>
+<div class="param">dx , dy 微分の次数と方向を決定する
+        (dx, dy)=(1, 0)    横方向の輪郭検出
+        (dx, dy)=(0, 1)    縦方向の輪郭検出
+        (dx, dy)=(1, 1)    斜め右上方向の輪郭検出
+ksize カーネルサイズ。-1から7までの奇数 -1(cv2.CV_SCHARR )は3x3のScharrフィルタ
+offset 加算値</div>
+</td></tr>
+
+<tr><th>Laplacian(ksize:int=3, offset:float=128)</th></tr>
+<tr><td>
+<div class="exp">Laplacianフィルタ ２次微分フィルタ</div>
+<div class="param">ksize カーネルサイズ。1～31の奇数
+offset 加算値</div>
+</td></tr>
+
+
+</table>
+</article>
+
+<h1>ルックアップテーブル</h1>
+<article class="content">
+<table>
+<tr><th>lookup_table(lut,comment:str='-')</th></tr>
+<tr><td>
+<div class="exp">ルックアップテーブル処理
+        ３チャンネル同じ処理を行う</div>
+<div class="param">umpy.ndarray lut ルックアップテーブル 値の型はnp.uint8 これ以外は処理がおかしくなる
+        配列は255個　これ以外のサイズはエラーになる
+comment logに記録するコメント。通常はファイル名を入れる</div>
+<pre>
+lut, name, description = UOpenCV.read_lookuptable('ルックアップテーブル\\金属光沢1.xml')
+UOpenCVUtil.plot_lookuptable(lut, name)
+
+color = UOpenCV(fname)
+color.imshow().lookup_table(lut, name).imshow()
+</pre>
+</td></tr>
+
+<tr><th>lookup_table_brightness(lut,comment:str='-')</th></tr>
+<tr><td>
+<div class="exp">ルックアップテーブル処理
+        輝度のみルックアップテーブル処理を行う
+        カラー画像以外は、lookup_tableと同じ結果になる</div>
+<div class="param">lut ルックアップテーブル 値の型はnp.uint8 これ以外は処理がおかしくなる
+        配列は255個　これ以外のサイズはエラーになる
+comment logに記録するコメント。通常はファイル名を入れる</div>
+</td></tr>
+
+
+</table>
+</article>
+
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

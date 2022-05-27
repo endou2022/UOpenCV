@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>コンストラクタ、プロパティー、入出力</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		コンストラクタ、プロパティー、入出力
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+<h1>コンストラクタ</h1>
+<article class="content">
+<table>
+<tr><th>UOpenCV(filename=None)</th></tr>
+<tr><td>
+<div class="exp">コンストラクタ</div>
+<div class="param">filename ファイル名を指定すると、オブジェクトを作る時に読み込む。</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>プロパティー</h1>
+<article class="content">
+<table>
+<tr><th>bitmap</th></tr>
+<tr><td>
+<div class="exp">ビットマップデータ
+        書き込みたい場合は _bitmap を利用する</div>
+<div class="alert">読み出し専用プロパティー</div>
+</td></tr>
+
+<tr><th>name</th></tr>
+<tr><td>
+<div class="exp">ファイル名
+        読み込み時に設定される</div>
+<div class="alert">読み出し専用プロパティー</div>
+</td></tr>
+
+<tr><th>kind</th></tr>
+<tr><td>
+<div class="exp">画像種別
+        enum('no_data','color','gray','binary','fft',...)</div>
+<div class="alert">読み出し専用プロパティー</div>
+</td></tr>
+
+<tr><th>width</th></tr>
+<tr><td>
+<div class="exp">画像の幅</div>
+<div class="alert">読み出し専用プロパティー</div>
+</td></tr>
+
+<tr><th>height</th></tr>
+<tr><td>
+<div class="exp">画像の高さ</div>
+<div class="alert">読み出し専用プロパティー</div>
+</td></tr>
+
+<tr><th>log</th></tr>
+<tr><td>
+<div class="exp">処理履歴
+        リスト形式で処理した履歴を記録している</div>
+<div class="alert">読み出し専用プロパティー</div>
+</td></tr>
+
+
+</table>
+</article>
+
+<h1>入出力</h1>
+<article class="content">
+<table>
+<tr><th>imread(filename: str)</th></tr>
+<tr><td>
+<div class="exp">画像入力 読み込めるファイルは cv2.imdecode の許す形式
+        Windows bitmaps, JPEG, Portable Network Graphics, WebP
+        読めない場合は例外を発生
+        gifファイルは読み込めない
+        cv2.imreadはパスに日本語が入ると読み込めない(ver.4.5)ので、numpy を利用してファイルの読み込みをしている
+</div>
+<div class="param">filename: 画像ファイル名</div>
+<pre>
+img = UOpenCV()
+try:
+    img.imread('lena.png')
+except Exception as e:
+    print(e)
+</pre>
+</td></tr>
+
+<tr><th>imwrite(filename: str)</th></tr>
+<tr><td>
+<div class="exp">画像出力
+        ファイルに保存　形式は拡張子で自動的に判別される。PNG形式を推奨
+        書き込めない場合は例外を発生
+        cv2.imwriteはパスに日本語が入ると画像名が文字化けするので、cv2.imencode を利用してフォーマットを整え、ファイル出力している</div>
+<div class="param">filename: 画像名
+        ディレクトリを作ることはできない</div>
+</td></tr>
+
+<tr><th>load_clipboard()</th></tr>
+<tr><td>
+<div class="exp">クリップボードから画像データをコピー</div>
+<div class="alert">実装していない</div>
+</td></tr>
+
+<tr><th>save_clipboard()</th></tr>
+<tr><td>
+<div class="exp">クリップボードへ画像データをコピー</div>
+<div class="alert">実装していない</div>
+</td></tr>
+
+
+</table>
+</article>
+
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

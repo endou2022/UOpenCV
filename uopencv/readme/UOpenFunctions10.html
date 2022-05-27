@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>補助関数</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		補助関数
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+<h1>補助関数</h1>
+<article class="content">
+<table>
+<tr><th>imshow(id=None,flags=cv2.WINDOW_NORMAL)</th></tr>
+<tr><td>
+<div class="exp">画像を表示する
+        日本語の識別文字は文字化けする</div>
+<div class="param">id ウインドウの識別文字
+        識別文字は他の表示ウインドウと重ならないようにする
+        指定しない場合は、self._name + ' ' + self._log[-1] が使われる
+flags cv2.WINDOW_NORMAL ウインドウの大きさ可変 
+      cv2.WINDOW_AUTOSIZE ウインドウの大きさ変更不可</div>
+</td></tr>
+
+<tr><th>waitKey()</th></tr>
+<tr><td>
+<div class="exp">キー入力待ち</div>
+</td></tr>
+
+
+<tr><th>read_lookuptable(fname: str)</th></tr>
+<tr><td>
+<div class="exp">ルックアップテーブルのデータを読み込む
+        openCVは日本語のファイル名には対応していないので、xml.etree.ElementTree を利用している</div>
+<div class="param">fname : ファイル名</div>
+<div class="ret">lookup_table : ルックアップテーブルデータ
+name : ルックアップテーブルの名前
+description : 説明</div>
+<div class="alert">staticmethod</div>
+<pre>
+lut, name, description = UOpenCV.read_lookuptable(fname)
+</pre>
+</td></tr>
+
+<tr><th>read_2Dfilter(fname: str)</th></tr>
+<tr><td>
+<div class="exp">空間フィルタのデータを読み込む</div>
+<div class="param">fname : ファイル名</div>
+<div class="ret">multiplier : 乗数
+divisor : 除数
+kernel : カーネル
+offset : 加算する数
+name : フィルタの名前
+description : 説明</div>
+<div class="alert">staticmethod</div>
+<pre>
+multiplier, divisor, k_mat, offset, name, description = UOpenCV.read_2Dfilter('空間フィルタ\\Laplacian\\3x3 ラプラシアン1.xml')
+kernel = k_mat * multiplier / divisor
+</pre>
+</td></tr>
+
+<tr><th>blank_image(height:int,width:int,color:int=0)</th></tr>
+<tr><td>
+<div class="exp">高さと幅を指定して単色の画像を作る</div>
+<div class="param">height 高さ
+width 幅
+color 色</div>
+<div class="ret">カラー画像オブジェクトを返す</div>
+<div class="alert">staticmethod</div>
+</td></tr>
+
+</table>
+</article>
+
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

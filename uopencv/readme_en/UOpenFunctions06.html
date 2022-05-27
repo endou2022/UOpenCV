@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>Image processing Image filter, look-up table</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Image processing Image filter, look-up table
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+<h1>Image filter</h1>
+<article class = "content">
+<table>
+<tr><th>filter2D(kernel, offset: float, comment: str ='-')</th></tr>
+<tr><td>
+<div class = "exp">Spatial filtering(convolution operation)
+        Do the same filtering for all channels</div>
+<div class = "param">kernel Convolution operation kernel
+offset Addition value after convolution operation</div>
+<pre>
+multiplier, divisor, k_mat, offset, name, description = UOpenCV.read_2Dfilter('Spatial_filter\\Laplacian\\3x3_Laplacian_1.xml')
+kernel = k_mat * multiplier / divisor
+
+color = UOpenCV(fname)
+color.imshow().filter2D(kernel, offset, description).imshow()
+</pre>
+</td></tr>
+
+<tr><th>blur(ksize: int = 3)</th></tr>
+<tr><td>
+<div class = "exp">Simple smoothing</div>
+<div class = "param">Kernel size odd only</div>
+</td></tr>
+
+<tr><th>medianBlur(ksize: int = 5)</th></tr>
+<tr><td>
+<div class = "exp">median filter</div>
+<div class = "param">ksize Kernel size odd only</div>
+</td></tr>
+
+<tr><th>Gaussian Blur(ksize: int = 5, sigmaX: float = 3)</th></tr>
+<tr><td>
+<div class = "exp">Gaussian filter</div>
+<div class = "param">ksize Kernel size. Odd number from 1 to 31
+sigmaX standard deviation</div>
+</td></tr>
+
+<tr><th>unsharp(ksize: int = 5, sigmaX: float = 3, k: float = 1)</th></tr>
+<tr><td>
+<div class = "exp">Unsharp filter Sharpening leaving edges
+        Insert smoothed(Gaussian) data from the original image
+        Multiply the subtracted image by a certain constant and add it to the input image</div>
+<div class = "param">ksize Gaussian filter kernel size
+sigmaX Gaussian filter standard deviation
+k Magnification</div>
+</td></tr>
+
+<tr><th>bilateralFilter(d: int = 15, sigmaColor: float = 25, sigmaSpace: float = 25)</th></tr>
+<tr><td>
+<div class = "exp">Bilateral filter
+        Smoothing with edges</div>
+<div class = "param">d Adjacent pixels to process
+sigmaColor Standard deviation of color space The larger this value, the smoother the smoothing is performed by mixing pixels with different colors.
+sigmaSpace Standard deviation for metric space The larger this value, the more distant pixels are mixed and smoothed.
+        The default argument is unadjusted</div>
+</td></tr>
+
+<tr><th>edgePreservingFilter(flags: int = cv2.RECURS_FILTER, sigma_s: float = 3.0, sigma_r: float = 0.1)</th></tr>
+<tr><td>
+<div class = "exp">A filter that smoothes while preserving edges
+        The OpenCV manual says "Input 8-bit 3-channel image", but it can also process grayscale images</div>
+<div class = "param">flags cv2.RECURS_FILTER or cv2.NORMCONV_FILTER
+sigma_s Range between 0 to 200 sigma spatial Proximity area size
+sigma_r Range between 0 to 1 sigma range Averages different colors in the neighborhood. Increasing sigma_r will increase the area of ​​a particular color.</div>
+</td></tr>
+
+<tr><th>detailEnhance(sigma_s: float = 10, sigma_r: float = 0.15)</th></tr>
+<tr><td>
+<div class = "exp">Detail enhancement filter
+Except for color images, there are 3 channels internally.</Div>
+<div class = "param">sigma_s Range between 0 to 200 sigma spatial Proximity area size
+sigma_r Range between 0 to 1 sigma range Averages different colors in the neighborhood. Increasing sigma_r will increase the area of ​​a particular color.</div>
+</td></tr>
+
+<tr><th>fastNlMeansDenoising(self, h: float = 10, hColor: float = 10, templateWindowSize: int = 7, searchWindowSize: int = 21)</th></tr>
+<tr><td>
+<div class = "exp">Non-Local Means Filter
+        Used for noise removal. Processing takes time
+        Internally uses fastNlMeansDenoisingColored and fastNlMeansDenoising properly</div>
+<div class = "param">h Noise removal strength
+Keep it the same as hColor h</div>
+</td></tr>
+
+<tr><th>Sobel(dx: int = 1, dy: int = 0, ksize: int = 3, offset:float=128)</th></tr>
+<tr><td>
+<div class = "exp">Sobel filter 1st derivative filter</div>
+<div class = "param">dx, dy Determine the order and direction of differentiation
+       (dx, dy) =(1, 0) Horizontal contour detection
+       (dx, dy) =(0, 1) Vertical contour detection
+       (dx, dy) =(1, 1) Contour detection in the diagonally upper right direction
+ksize Kernel size. Odds from -1 to 7 -1(cv2.CV_SCHARR) is a 3x3 Scharr filter
+offset add value</div>
+</td></tr>
+
+<tr><th>Laplacian(ksize: int = 3, offset:float=128)</th></tr>
+<tr><td>
+<div class = "exp">Laplacian filter Second derivative filter</div>
+<div class = "param">ksize Kernel size. Odd number from 1-31
+offset add value<</div>
+</td></tr>
+
+
+</table>
+</article>
+
+<h1>Look-up table</h1>
+<article class = "content">
+<table>
+<tr><th>lookup_table(lut, comment: str ='-')</th></tr>
+<tr><td>
+<div class = "exp">Lookup table processing
+        Perform the same processing for 3 channels</div>
+<div class = "param">umpy.ndarray lut lookup table value type is np.uint8 Other than this, processing is strange.
+        255 arrays, other sizes will result in an error
+comment A comment to be recorded in the log. Usually enter the file name</div>
+<pre>
+lut, name, description = UOpenCV.read_lookuptable('lookup table\\metallic luster 1.xml')
+UOpenCVUtil.plot_lookuptable(lut, name)
+
+color = UOpenCV(fname)
+color.imshow().lookup_table(lut, name).imshow()
+</pre>
+</td></tr>
+
+<tr><th>lookup_table_brightness(lut, comment: str ='-')</th></tr>
+<tr><td>
+<div class = "exp">Lookup table processing
+         Look-up table processing is performed only for brightness
+         Except for the color image, the result is the same as lookup_table</div>
+<div class = "param">lut lookup table value type is np.uint8 Other than this, processing is strange
+         255 arrays, other sizes will result in an error
+comment A comment to be recorded in the log. Usually enter the file name</div>
+</td></tr>
+
+
+</table>
+</article>
+
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class.(C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

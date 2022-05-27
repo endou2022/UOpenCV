@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>幾何変換、画像変換</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		幾何変換、画像変換
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+<h1>幾何変換</h1>
+<article class="content">
+<table>
+<tr><th>resize(fx:float, fy:float, interpolation=cv2.INTER_NEAREST)</th></tr>
+<tr><td>
+<div class="exp">画像サイズを変更する</div>
+<div class="param">fx , fy 倍率(縮小後のサイズではないので注意)
+interpolation 補間方法
+       cv2.INTER_NEAREST: 最近傍補間
+       cv2.INTER_LINEAR: バイリニア補間
+       cv2.INTER_CUBIC: バイキュービック補間
+       cv2.INTER_AREA: ピクセル領域の関係を利用したリサンプリング
+       cv2.INTER_LANCZOS4: Lanczos 補間</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>画像変換</h1>
+<article class="content">
+<table>
+<tr><th>grayscale()</th></tr>
+<tr><td>
+<div class="exp">グレースケール変換</div>
+</td></tr>
+
+<tr><th>monotone(b:int,g:int,r:int)</th></tr>
+<tr><td>
+<div class="exp">モノトーン変換
+        輝度はそのままで色相と彩度を変える</div>
+<div class="param">(b,g,r) 変換する色 np.uint8 のみ</div>
+</td></tr>
+
+<tr><th>applyColorMap(colormap:int=cv2.COLORMAP_JET)</th></tr>
+<tr><td>
+<div class="exp">擬似カラー表示にする</div>
+<div class="param">colormap カラーマップ番号
+        cv2.COLORMAP_AUTUMN
+        cv2.COLORMAP_BONE 
+        cv2.COLORMAP_JET 
+        cv2.COLORMAP_WINTER
+        cv2.COLORMAP_RAINBOW 
+        cv2.COLORMAP_HOT
+        cv2.COLORMAP_TURBO など</div>
+</td></tr>
+
+<tr><th>cvtColor(code:str)</th></tr>
+<tr><td>
+<div class="exp">色画像分離</div>
+<div class="param">code 分離コマンド
+        X(XYZ)
+        Y(XYZ)
+        Z(XYZ)
+        Y(YCrCb) # 輝度
+        Cr(YCrCb)
+        Cb(YCrCb)
+        H(HSV) # 色相 Hue
+        S(HSV) # 彩度 Saturation  Chroma
+        V(HSV) # 明度 Value  Brightness
+        H(HLS) # 色相 Hue
+        L(HLS) # 輝度 Lightness
+        S(HLS) # 彩度 Saturation  Chroma
+        L(Lab)
+        a(Lab)
+        b(Lab)
+        L(Luv) # CIE Luv色空間において値域はL [0, 100], u[-100, 100], v[-100, 100]
+        u(Luv)
+        v(Luv)
+        Y(YUV) # 輝度
+        U(YUV)
+        V(YUV)
+        B(BGR)
+        G(BGR)
+        R(BGR)</div>
+<div class="ret">分離した画像</div>
+</td></tr>
+
+<tr><th>threshold(thresh:int=128, type:int=cv2.THRESH_BINARY)</th></tr>
+<tr><td>
+<div class="exp">大域的２値化
+        カラー画像ならばグレースケール化して２値化する
+        グレースケール（１チャンネル）画像ならばそのまま２値化する</div>
+<div class="param">thresh cv2.THRESH_BINARYのときの閾値
+type ２値化の方法
+        cv2.THRESH_BINARY threshold 以下の値を0、それ以外の値を maxValue(255) にして2値化
+        cv2.THRESH_OTSU 大津の手法で閾値を自動的に決める threshは無視される
+        cv2.THRESH_TRIANGLE トライアングルアルゴリズムで閾値を自動的に決める  threshは無視される</div>
+<div class="ret">UOpenCV 2値化された画像オブジェクト
+UOpenCV.threshold 自動計算した場合の閾値</div>
+</td></tr>
+
+<tr><th>adaptiveThreshold(adaptiveMethod:int=cv2.ADAPTIVE_THRESH_MEAN_C, thresholdType:int=cv2.THRESH_BINARY, blockSize:int=51, C:float=0)</th></tr>
+<tr><td>
+<div class="exp">適応的2値化
+        カラー画像ならばグレースケール化して２値化する
+        グレースケール（１チャンネル）画像ならばそのまま２値化する
+        ある近傍領域の中で閾値を計算し、それぞれの領域で2値化処理を行う</div>
+<div class="param">adaptiveMethod 適応的しきい値処理で使用するアルゴリズム cv2.ADAPTIVE_THRESH_MEAN_C、cv2.ADAPTIVE_THRESH_GAUSSIAN_C
+        cv2.ADAPTIVE_THRESH_GAUSSIAN_C の方が自然な感じがするが、ラベリングを考えると cv2.ADAPTIVE_THRESH_MEAN_C の方が良さそう
+thresholdType 二値化の種類 cv2.THRESH_BINARY、cv2.THRESH_BINARY_INV
+blockSize しきい値計算のための近傍サイズ 1より大きい奇数
+C 計算した閾値からCを引いた値を最終的な閾値にする</div>
+</td></tr>
+
+<tr><th>dft()</th></tr>
+<tr><td>
+<div class="exp">FFTを実行しパワースペクトル画像を返す
+        カラー画像ならば内部でグレースケール変換する</div>
+<div class="ret">UOpenCV FFT処理画像(表示できるように正規化（min-max normalization）した画像) １チャンネル画像
+UOpenCV._fft_complex 複素数データ</div>
+</td></tr>
+
+
+</table>
+</article>
+
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

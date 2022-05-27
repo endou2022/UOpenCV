@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>ヒストグラムの表示</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		ヒストグラムの表示
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+<h1>ヒストグラムの表示</h1>
+<article class="content">
+calcHist などで集計したデータを簡単にグラフ化するための関数を UOpenCV とは別に <a href="UOpenCVUtil.py">UOpenCVUtil.py</a> として作成している。<br>
+プログラムの先頭で
+<pre>
+import UOpenCVUtil
+</pre>
+として読み込み
+<pre>
+UOpenCVUtil.showHist(cv_image = img1, block=True)
+</pre>
+などと呼び出して利用する。
+<div class="alert">関数はmatplotlibを使っているが、matplotlibのバックエンドを標準のTkAggから変えておかないとハングアップすることがある
+バックエンドには
+['GTK3Agg', 'GTK3Cairo', 'GTK4Agg', 'GTK4Cairo', 'MacOSX', 'nbAgg', 'QtAgg', 'QtCairo', 'Qt5Agg', 'Qt5Cairo', 
+ 'TkAgg', 'TkCairo', 'WebAgg', 'WX', 'WXAgg', 'WXCairo', 'agg', 'cairo', 'pdf', 'pgf', 'ps', 'svg', 'template']
+などがある。
+wxPython を使う場合は、 WXAgg を利用する
+</div>
+
+<table>
+<tr><th>showHist(cv_image, wname=None, title=None, block:bool=False)</th></tr>
+<tr><td>
+<div class="exp">ヒストグラムを描画する
+    ヒストグラムはcalcHistで求めておく</div>
+<div class="param">cv_image UOpenCVオブジェクト
+wname ウインドウ名
+title 表の名前
+block  True プロットした後に待つ  False 次の処理を実行する  </div>
+<div class="alert">block=Trueでないと描画がうまくできないことがある</div>
+</td></tr>
+
+<tr><th>showDist(cv_image, wname=None, title=None, block:bool=False)</th></tr>
+<tr><td>
+<div class="exp">水平・垂直方向周辺分布を描画する
+    ヒストグラムはprojection_distribution_h , projection_distribution_vで求めておく</div>
+<div class="param">cv_image UOpenCVオブジェクト
+wname ウインドウ名
+title 表の名前
+block  True プロットした後に待つ  False 次の処理を実行する</div>
+<div class="alert">block=Trueでないと描画がうまくできないことがある</div>
+</td></tr>
+
+<tr><th>showLine(cv_image, wname=None, title=None, block:bool=False)</th></tr>
+<tr><td>
+<div class="exp">線上のデータを描画する
+    データはget_line_dataで求めておく</div>
+<div class="param">cv_image UOpenCVオブジェクト
+wname ウインドウ名
+title 表の名前
+block  True プロットした後に待つ  False 次の処理を実行する</div>
+<div class="ret">戻値</div>
+<div class="alert">block=Trueでないと描画がうまくできないことがある</div>
+</td></tr>
+
+<tr><th>plot_lookuptable(lut, name, block:bool=False)</th></tr>
+<tr><td>
+<div class="exp">ルックアップテーブルをグラフ表示する</div>
+<div class="param">lut ルックアップテーブル
+name テーブルの名前
+block  True プロットした後に待つ  False 次の処理を実行する</div>
+<div class="alert">block=Trueでないと描画がうまくできないことがある</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>UOpenCVUtil.py のコード</h1>
+<article class="content">
+
+<pre>
+# -*- coding:utf-8 -*-
+
+# matplotlibを使うが、matplotlibのバックエンドを標準のTkAggから変えておかないとハングアップすることがある
+# バックエンドには
+# ['GTK3Agg', 'GTK3Cairo', 'GTK4Agg', 'GTK4Cairo', 'MacOSX', 'nbAgg', 'QtAgg', 'QtCairo', 'Qt5Agg', 'Qt5Cairo', 
+#  'TkAgg', 'TkCairo', 'WebAgg', 'WX', 'WXAgg', 'WXCairo', 'agg', 'cairo', 'pdf', 'pgf', 'ps', 'svg', 'template']
+# などがある。
+# wxPython を使う場合は、 WXAgg を利用する
+# https://code-examples.net/ja/q/3220c9  (2022/05/18)
+
+# import matplotlib
+# matplotlib.use('WXAgg')
+from matplotlib import pyplot as plt
+
+from UOpenCV import UOpenCV
+# -------------------------
+def showHist(cv_image, wname=None, title=None, block:bool=False):
+    """ヒストグラムを描画する
+    ヒストグラムはcalcHistで求めておく
+    @param UOpenCV cv_image UOpenCVオブジェクト
+    @param str wname ウインドウ名
+    @param str title 表の名前
+    @param bool block  True プロットした後に待つ  False 次の処理を実行する  Trueでないと描画がうまくできないことがある
+    """
+    if wname is None:
+        plt.figure(cv_image.log[-1])
+    else:
+        plt.figure(str(wname))
+    if title is not None:
+        plt.title(str(title),fontname="MS Gothic") # 日本語フォントを指定しないと文字化けする
+    plt.grid()
+
+    if cv_image.kind == 'color':
+        plt.plot(cv_image.dist_array[0] , color='b')
+        plt.plot(cv_image.dist_array[1] , color='g')
+        plt.plot(cv_image.dist_array[2] , color='r')
+    else:
+        plt.plot(cv_image.dist_array[0] , color='k')
+
+    plt.show(block=block)
+# -------------------------
+def showDist(cv_image, wname=None, title=None, block:bool=False):
+    """水平・垂直方向周辺分布を描画する
+    ヒストグラムはprojection_distribution_h , projection_distribution_vで求めておく
+    @param UOpenCV cv_image UOpenCVオブジェクト
+    @param str wname ウインドウ名
+    @param str title 表の名前
+    @param bool block  True プロットした後に待つ  False 次の処理を実行する  Trueでないと描画がうまくできないことがある
+    """
+    if wname is None:
+        plt.figure(cv_image.log[-1])
+    else:
+        plt.figure(str(wname))
+    if title is not None:
+        plt.title(str(title),fontname="MS Gothic") # 日本語フォントを指定しないと文字化けする
+    plt.grid()
+
+    if cv_image.kind == 'color':
+        plt.plot(cv_image.dist_array[3], cv_image.dist_array[0], color='b')
+        plt.plot(cv_image.dist_array[3], cv_image.dist_array[1], color='g')
+        plt.plot(cv_image.dist_array[3], cv_image.dist_array[2], color='r')
+    else:
+        plt.plot(cv_image.dist_array[1], cv_image.dist_array[0], color='k')
+
+    plt.show(block=block)
+# -------------------------
+def showLine(cv_image, wname=None, title=None, block:bool=False):
+    """線上のデータを描画する
+    データはget_line_dataで求めておく
+    @param UOpenCV cv_image UOpenCVオブジェクト
+    @param str wname ウインドウ名
+    @param str title 表の名前
+    @param bool block  True プロットした後に待つ  False 次の処理を実行する  Trueでないと描画がうまくできないことがある
+    """
+    if wname is None:
+        plt.figure(cv_image.log[-1])
+    else:
+        plt.figure(str(wname))
+    if title is not None:
+        plt.title(str(title),fontname="MS Gothic") # 日本語フォントを指定しないと文字化けする
+    plt.grid()
+
+    if cv_image.kind == 'color':
+        plt.plot(cv_image.x_axis, cv_image.value_b, color='b')
+        plt.plot(cv_image.x_axis, cv_image.value_g, color='g')
+        plt.plot(cv_image.x_axis, cv_image.value_r, color='r')
+    else:
+        plt.plot(cv_image.x_axis, cv_image.value_b, color='k')
+
+    plt.show(block=block)
+# -------------------------
+def plot_lookuptable(lut, name, block:bool=False):
+    """ルックアップテーブルをグラフ表示する
+    @param lut ルックアップテーブル
+    @param str name テーブルの名前
+    @param bool block  True プロットした後に待つ  False 次の処理を実行する  Trueでないと描画がうまくできないことがある
+    @usage UOpenCV.plot_lookuptable(lut,fname)
+    """
+    plt.figure('lookup table')
+    plt.title(name,fontname="MS Gothic")
+    plt.plot(lut,color='k')
+    plt.show(block=block)
+# -------------------------
+</pre>
+</article>
+
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

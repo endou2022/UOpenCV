@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>Histogram display</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Histogram display
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+<h1>Histogram display</h1>
+<article class = "content">
+He has created a function to easily graph the data aggregated by calcHist etc. as <a href="UOpenCVUtil.py">UOpenCVUtil.py </a>separately from UOpenCV. <br>
+At the beginning of the program
+<pre>
+import UOpenCVUtil
+</pre>
+Read as
+<pre>
+UOpenCVUtil.showHist (cv_image = img1, block = True)
+</pre>
+And use it.
+The <div class = "alert">function uses matplotlib, but it may hang if you don't change the matplotlib backend from the standard TkAgg.
+On the back end
+['GTK3Agg','GTK3Cairo','GTK4Agg','GTK4Cairo','MacOSX','nbAgg','QtAgg','QtCairo','Qt5Agg','Qt5Cairo',
+ 'TkAgg','TkCairo','WebAgg','WX','WXAgg','WXCairo','agg','cairo','pdf','pgf','ps','svg',' template ']
+and so on.
+If you use wxPython, use WXAgg
+</div>
+
+<table>
+<tr><th>showHist (cv_image, wname = None, title = None, block: bool = False)</th></tr>
+<tr><td>
+<div class = "exp">Draw a histogram
+    Histogram is calculated with calcHist</div>
+<div class = "param">cv_image UOpenCV object
+wname window name
+title Table name
+block True Wait after plotting False Do the following</div>
+<div class = "alert">block = True or you may not be able to draw well</div>
+</td></tr>
+
+<tr><th>showDist (cv_image, wname = None, title = None, block: bool = False)</th></tr>
+<tr><td>
+<div class = "exp">Draw horizontal and vertical marginal distribution
+    Histogram is obtained by projection_distribution_h, projection_distribution_v</div>
+<div class = "param">cv_image UOpenCV object
+wname window name
+title Table name
+block True Wait after plotting False Do the following</div>
+<div class = "alert">block = True or you may not be able to draw well</div>
+</td></tr>
+
+<tr><th>showLine (cv_image, wname = None, title = None, block: bool = False)</th></tr>
+<tr><td>
+<div class = "exp">Draw data on the line
+    Get the data with get_line_data</​​div>
+<div class = "param">cv_image UOpenCV object
+wname window name
+title Table name
+block True Wait after plotting False Do the following</div>
+<div class = "ret">Return value</div>
+<div class = "alert">block = True or you may not be able to draw well</div>
+</td></tr>
+
+<tr><th>plot_lookuptable (lut, name, block: bool = False)</th></tr>
+<tr><td>
+<div class = "exp">Graph lookup table</div>
+<div class = "param">lut lookup table
+name The name of the table
+block True Wait after plotting False Do the following</div>
+<div class = "alert">block = True or you may not be able to draw well</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>UOpenCVUtil.py code</h1>
+<article class = "content">
+
+<pre>
+#-*-coding: utf-8-*-
+
+Use #matplotlib, but may hang if you don't change the matplotlib backend from the standard TkAgg
+#On the back end
+# ['GTK3Agg','GTK3Cairo','GTK4Agg','GTK4Cairo','MacOSX','nbAgg','QtAgg','QtCairo','Qt5Agg','Qt5Cairo',
+#'TkAgg','TkCairo','WebAgg','WX','WXAgg','WXCairo','agg','cairo','pdf','pgf','ps','svg',' template']
+# and so on.
+# If you use wxPython, use WXAgg
+# https://code-examples.net/ja/q/3220c9 (2022/05/18)
+
+# import matplotlib
+# matplotlib.use ('WXAgg')
+from matplotlib import pyplot as plt
+
+from UOpenCV import UOpenCV
+# -------------------------
+def showHist (cv_image, wname = None, title = None, block: bool = False):
+    """Draw a histogram
+    Histogram is calculated by calcHist
+    @param UOpenCV cv_image UOpenCV object
+    @param str wname Window name
+    @param str title Table name
+    @param bool block True Wait after plotting False Perform the following processing If it is not True, drawing may not be successful.
+    """
+    if wname is None:
+        plt.figure (cv_image.log [-1])
+    else: else:
+        plt.figure (str (wname))
+    if title is not None:
+        plt.title (str (title), fontname = "MS Gothic") # Garbled characters if Japanese font is not specified
+    plt.grid ()
+
+    if cv_image.kind =='color':
+        plt.plot (cv_image.dist_array [0], color ='b')
+        plt.plot (cv_image.dist_array [1], color ='g')
+        plt.plot (cv_image.dist_array [2], color ='r')
+    else: else:
+        plt.plot (cv_image.dist_array [0], color ='k')
+
+    plt.show (block = block)
+# -------------------------
+def showDist (cv_image, wname = None, title = None, block: bool = False):
+    """Draw horizontal and vertical marginal distribution
+    Histogram is obtained by projection_distribution_h, projection_distribution_v
+    @param UOpenCV cv_image UOpenCV object
+    @param str wname Window name
+    @param str title Table name
+    @param bool block True Wait after plotting False Performs the following processing. If it is not True, drawing may not be successful.
+    """
+    if wname is None:
+        plt.figure (cv_image.log [-1])
+    else: else:
+        plt.figure (str (wname))
+    if title is not None:
+        plt.title (str (title), fontname = "MS Gothic") # Garbled characters if Japanese font is not specified
+    plt.grid ()
+
+    if cv_image.kind =='color':
+        plt.plot (cv_image.dist_array [3], cv_image.dist_array [0], color ='b')
+        plt.plot (cv_image.dist_array [3], cv_image.dist_array [1], color ='g')
+        plt.plot (cv_image.dist_array [3], cv_image.dist_array [2], color ='r')
+    else: else:
+        plt.plot (cv_image.dist_array [1], cv_image.dist_array [0], color ='k')
+
+    plt.show (block = block)
+# -------------------------
+def showLine (cv_image, wname = None, title = None, block: bool = False):
+    """Draw data on the line
+    Get the data with get_line_data
+    @param UOpenCV cv_image UOpenCV object
+    @param str wname Window name
+    @param str title Table name
+    @param bool block True Wait after plotting False Perform the following processing If it is not True, drawing may not be successful.
+    """
+    if wname is None:
+        plt.figure (cv_image.log [-1])
+    else: else:
+        plt.figure (str (wname))
+    if title is not None:
+        plt.title (str (title), fontname = "MS Gothic") # Garbled characters if Japanese font is not specified
+    plt.grid ()
+
+    if cv_image.kind =='color':
+        plt.plot (cv_image.x_axis, cv_image.value_b, color ='b')
+        plt.plot (cv_image.x_axis, cv_image.value_g, color ='g')
+        plt.plot (cv_image.x_axis, cv_image.value_r, color ='r')
+    else: else:
+        plt.plot (cv_image.x_axis, cv_image.value_b, color ='k')
+
+    plt.show (block = block)
+# -------------------------
+def plot_lookuptable (lut, name, block: bool = False):
+    """Graph the look-up table
+    @param lut Lookup table
+    @param str name The name of the table
+    @param bool block True Wait after plotting False Perform the following processing If it is not True, drawing may not be successful.
+    @ usage UOpenCV.plot_lookuptable (lut, fname)
+    """
+    plt.figure ('lookup table')
+    plt.title (name, fontname = "MS Gothic")
+    plt.plot (lut, color ='k')
+    plt.show (block = block)
+# -------------------------
+</pre>
+</article>
+
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class. (C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

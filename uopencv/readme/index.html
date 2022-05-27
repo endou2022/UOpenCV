@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>UOpenCVクラス</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		はじめに
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+		<h1>はじめに</h1>
+		<pre style="margin: 0.2em 0 0 4em;background-color: white;">
+[ソフト名]		UOpenCV
+				opencv-pythonのラッパークラス
+[著作権・作者] 	FINAL <img alt="mail address" src="addr.png">
+[対応ＯＳ]		たぶんOS非依存
+[動作確認]		Windows10
+[作成日]		2022/10/01
+[必要な物]		Python
+				opencv-python
+				opencv-contrib-python  (opencv-python と opencv-contrib-pythonは同時に入れる必要がある)
+[種別]			フリーソフトウェア
+[ライセンス]	<a href="https://www.weblio.jp/content/BSD%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9">BSDライセンス</a> (2021/09/30確認)
+[インストール]	「pip install UOpenCV」でインストールするか、<a href="UOpenCV.py">UOpenCV.py</a> をダウンロードする。
+</pre>
+		<h2>特徴</h2>
+		<ul>
+			<li>UOpenCV とは、OpenCV のラッパークラスです。<span class="alert">opencv-python の関数の一部(＋本やホームページにあった画像処理)をクラス化</span>して(作者にとって)使いやすくしました。</li>
+			<li>画像処理ソフトを作るために作ったクラスです。画像処理ソフトとは独立していますので、クラスを利用して色々なソフトを作ることができます。</li>
+			<li>ほとんどの関数が画像オブジェクト(UOpenCV)を返しますので、メソッドチェーンを作ることができます。</li>
+			<li>原則として、メソッドは名前引数で呼び出します。</li>
+			<li>ほとんどの関数のパラメータが調整してあり、デフォルトのままで使うことができます。</li>
+			<li>動作確認をしていますが、本プログラムにていかなる問題が発生しても作者は一切の責任を負いません。(作者の免責)</li>
+		</ul>
+
+		<h2>カスタマイズ</h2>
+		<ul>
+			<li>pythonでプログラムしていますので改造は簡単にできます。</li>
+		</ul>
+
+		<h2>サポートについて</h2>
+		<ul>
+			<li>サポートは行いません。自己責任で使う事ができる人のみ使用してください。(無保証)</li>
+			<li>メールでの質問にも答えることができないと思います。</li>
+			<li>このドキュメントは作者の覚えです。</li>
+		</ul>
+
+		<h2>更新履歴</h2>
+		<ul>
+			<li>ver.1.0 2022/10/01 opencv-pythonを利用し、OpenCVのラッパーとして全面改定<br>
+                   UBitmapからUOpenCVと改名<br>
+                   バージョン番号リセット</li>
+			<li>5.4    11/03/20    C++Builder用の最後のバージョン</li>
+			<li>5.0    07/11/14    カラーとグレースケールのクラスを統合した</li>
+			<li>4.0    06/02/15    カラー・グレースケール処理等ごっちゃになっていたのを分離</li>
+			<li>3.0    04/06/16    AT-Image ver.2.5のTForm2クラスを全面改定し、クラス(UBitmap)として独立させた<br>
+                   BorlandのVCLのクラス名が「T」から始まるので「U」Bitmapと名付けた<br>
+                   バージョンはAT-Imageと合わせるために3.0から始まる<br>
+                   C++Builder用のクラスライブラリ</li>
+			<li>2.0    99/05/05    AT-Imageの仕様の全面見直し(MDI化、その他)</li>
+			<li>1.0    98/05/14    AT-Image(画像処理ソフト) 初期バージョン<br>
+                   C++Builderで作ったソフトウエア</li>
+		</ul>
+
+		<h2>謝辞</h2>
+		<div style="margin: 0.2em 0 0 4em;">
+OpenCVを開発されている方々に感謝いたします。<br>
+プログラムを作る際に参考にしたホームページは、ソースファイルの中に書いてあります。かっこ内はホームページを閲覧した日付です。<br>
+技術情報を公開してくださっている方々に感謝します。</div>
+	</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>

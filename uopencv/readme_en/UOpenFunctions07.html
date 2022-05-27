@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+<meta charset = "utf-8">
+<meta content = "author" name = "Y.ENDOU">
+<meta content = "UOpenCV, opencv-python, wrapper, original class" name = "keywords">
+<meta content = "opencv-python wrapper class" name = "description">
+<title>Image processing Morphology processing, edge detection</title>
+<link href = "reset.css" rel = "stylesheet">
+<link href = "uopencv.css" rel = "stylesheet">
+</head>
+
+<body>
+<header>
+Image processing Morphology processing, edge detection
+</header>
+
+<nav>
+<ul>
+<li><a href="index.html">Introduction </a></li>
+<li><a href="UOpenCVClass.html">How to use the UOpenCV class </a></li>
+<li><a href="UOpenFunctions01.html">UOpenCV function list </a></li>
+<li><a href="UOpenFunctions02.html">Constructor, properties, input / output </a></li>
+<li><a href="UOpenFunctions03.html">Pixel access, image measurement </a></li>
+<li><a href="UOpenFunctions04.html">Geometric transformation, image transformation </a></li>
+<li><a href="UOpenFunctions05.html">Image processing Shading correction, histogram conversion </a></li>
+<li><a href="UOpenFunctions06.html">Image processing Image filter, look-up table </a></li>
+<li><a href="UOpenFunctions07.html">Image processing Morphology processing, edge detection </a></li>
+<li><a href="UOpenFunctions08.html">Image processing Art effect, binary image processing </a></li>
+<li><a href="UOpenFunctions09.html">Image processing: Inverse FFT conversion, inter-image calculation </a></li>
+<li><a href="UOpenFunctions10.html">Auxiliary Functions </a></li>
+<li><a href="UOpenFunctions11.html">Histogram display </a></li>
+</ul>
+</nav>
+
+<section>
+
+<h1>Morphology processing</h1>
+<article class = "content">
+<table>
+<tr><th>erode (ksize: int = 3, iterations: int = 1)</th></tr>
+<tr><td>
+<div class = "exp">Erosion processing (of white part)
+        It is used for binary images, but it can also be used for color images.
+OpenCV focuses on the white part and processes it</div>
+<div class = "param">ksize kernel size
+        The kernel is created with cv2.getStructuringElement (), but UOpenCV uses cv2.MORPH_RECT for his parameters. There are also cv2.MORPH_ELLIPSE and cv2.MORPH_CROSS.
+iterations iterations</div>
+</td></tr>
+
+<tr><th>dilate (ksize: int = 3, iterations: int = 1)</th></tr>
+<tr><td>
+<div class = "exp">Dilate processing (white part)
+        It can be used for binary images, but it can also be used for color images.</Div>
+<div class = "param">ksize kernel size
+iterations iterations</div>
+</td></tr>
+
+<tr><th>morphologyEx (op: int, ksize: int = 3, iterations: int = 1)</th></tr>
+<tr><td>
+<div class = "exp">Various morphology processing (in white part)
+        It can be used for binary images, but it can also be used for color images.</Div>
+<div class = "param">op Morphology processing method
+        Same as cv2.MORPH_ERODE erode ()
+        Same as cv2.MORPH_DILATE erode ()
+        cv2.MORPH_OPEN Contraction → Expansion
+        cv2.MORPH_CLOSE Expansion → Contract
+        cv2.MORPH_GRADIENT Obtains the outline (boundary line) of the object that takes the difference between the expanded image and the contracted image.
+        cv2.MORPH_TOPHAT Take the difference between the input image and the opening image
+        cv2.MORPH_BLACKHAT Take the difference between the input image and the closed image
+ksize kernel size
+iterations iterations</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>Edge detection</h1>
+<article class = "content">
+<table>
+<tr><th>morphologyGradient (dilate_ksize: int = 3, dilate_it: int = 1, erode_ksize: int = 3, erode_it: int = 0)</th></tr>
+<tr><td>
+<div class = "exp">Create boundaries using morphology processing
+        Subtract the image reduced n times from the image expanded m times</div>
+<div class = "param">dilate_ksize Kernel size for dilate (expansion)
+dilate_it How many times dilate is repeated
+erode_ksize erode (reduced) kernel size
+erode_it erode repeat count</div>
+</td></tr>
+
+
+<tr><th>Canny (threshold1: float = 50, threshold2: float = 150, apertureSize: int = 3)</th></tr>
+<tr><td>
+<div class = "exp">Canny method
+        In the case of a color image, it is processed after making it a grayscale image internally</div>
+<div class = "param">threshold1 Minimum threshold Increase little by little to reduce the number of edges. The magnitude of continuity
+threshold2 Maximum threshold Increase gradually to reduce the number of edges. This brightness is an edge
+apertureSize Sobel filter size 3, 5, or 7</div>
+<div class = "ret">Returns a binary image object</div>
+<div class = "alert">Returns a binary image</div>
+</td></tr>
+
+<tr><th>HoughCircles (method: int = cv2.HOUGH_GRADIENT, dp: float = 0.8, minDist: float = 50, param1: float = 100, param2: float = 100, minRadius: int = 0, maxRadius: int = 0, pcolor = (0,0,255))</th></tr>
+<tr><td>
+<div class = "exp">Find a circle by Hough transform, draw it on the original image and return it (the original image is not changed)
+        It uses edge gradients, so it's better to handle blurred images. Detection sensitivity changes depending on the degree of blurring
+        Binary images cannot be detected without blurring
+        For color images, make them grayscale images internally before processing</div>
+<div class = "param">method Hough transform method cv2.HOUGH_GRADIENT and cv2.HOUGH_GRADIENT_ALT
+dp Voting device resolution 0.8-1.2
+minDist The distance at which the circles must be at least separated
+param1 = 100 Canny method Hysteresis processing threshold
+param2 = Threshold for detecting the center of a circle If the threshold is set to a low value, the number of false detections of the circle will increase, and if it is set to a high value, the number of undetected circles will increase.
+minRadius = 0 Lower limit of radius of circle to detect
+maxRadius = 0 Upper limit of the radius of the circle to be detected maxRadius <= 0 to the maximum
+pcolor The color to draw the extracted circle</div>
+<div class = "ret">UOpenCV Image depicting the extracted circle
+UOpenCV.circles [[[x coordinate of the center point of the circle, y coordinate of the center point of the circle, radius of the circle] ...]]
+        Add the result as an instance</div>
+<div class = "alert">Binary images cannot be detected without blurring
+Returns a color image</div>
+<pre>
+color = UOpenCV(fname)
+img = color.blur(5).imshow().HoughCircles().imshow() # <span class ='error'>It's important to blur</span>
+print('x \ty \tr')
+for dat in img.circles [0]:
+    x, y, r = dat
+    print('{} \t {} \t {}'. format(x, y, r))
+</pre>
+</td></tr>
+
+<tr><th>HoughLinesP (rho: float = 1, theta: float = np.radians (1), threshold: int = 100, minLineLength: float = 0, maxLineGap: float = 0, pcolor = (0,0,255) )</th></tr>
+<tr><td>
+<div class = "exp">Find the line segment by Hough transform, draw it on the original image and return it (the original image is not changed) Probabilistic Hough transform
+        Process the white part. It is good to detect the contour by the Canny method.
+        cv2.HoughLinesP is for 1 channel (grayscale) image only
+        In the case of a color image, it is processed after making it a grayscale image internally.
+        It can be processed without blurring. You can do it with a binary image</div>
+<div class = "param">rho Distance between Cartesian coordinate point and straight line = 1 ρ = xcosθ + ysinθ ρ value. Specify a value of 1 or more.
+theta Cartesian coordinate point and straight line angle Rotation angle for randomly determining a line. If you increase it, you will recognize complicated lines. The value of θ in ρ = xcosθ + ysinθ.
+threshold Threshold (number of votes judged as a straight line)
+minLineLength The minimum length to be considered a straight line
+maxLineGap Length of point spacing considered to be the same straight line
+pcolor The color to draw the extracted circle</div>
+<div class = "r"et ">UOpenCV line segment drawn image
+UOpenCV.lines Line segment start and end coordinates(x1, y1)-(x2, y2)
+        Add the result as an instance</div>
+<div class = "alert">Returns a color image</div>
+<pre>
+color = UOpenCV(fname)
+img = color.Canny().HoughLinesP().imshow()
+print('(x1, y1)-(x2, y2)')
+for line in img.lines:
+    x1, y1, x2, y2 = line [0]
+    print('({}, {})-({}, {})'.format(x1, y1, x2, y2))
+</pre>
+</td></tr>
+
+<tr><th>FastLineDetector(length_threshold = 5, distance_threshold = 1.41421356, canny_th1 = 50, canny_th2 = 150, canny_aperture_size = 3, do_merge = False, pcolor =(0,0,255))</th></tr>
+<tr><td>
+<div class = "exp">Fast Line Detector Line segment detection
+        In the case of a color image, it is processed after making it a grayscale image internally.
+        It can be processed without blurring. You can do it with a binary image</div>
+<div class = "param">engage_threshold --Length threshold Shorter segments will be discarded
+distance_threshold --Distance threshold Points located from hypothetical lines farther than this are considered outliers.
+canny_th1 --Canny Hysteresis 1 The first threshold of the Canny() hysteresis procedure
+canny_th2 --Canny Hysteresis 1 The second threshold of the Canny() hysteresis procedure
+canny_aperture_size --Canny Sobel Operator Aperture Size Canny() Sobel Operator Aperture Size
+do_merge --Incremental merge option If True, an incremental merge of segments will be performed.
+tuple pcolor Color to draw the extracted circle</div>
+<div class = "ret">Image with UOpenCV line segment drawn
+Note that the UOpenCV.lines line segment list(x1, y1)-(x2, y2) is a set float type.
+        Add the result as an instance</div>
+<div class = "alert">Returns a color image
+Fast Line Detector uses ximgproc of openCV conribution library
+  pip install opencv-python
+  pip install opencv-contrib-python
+As, it is necessary to install the library. Sometimes it didn't work unless I put it in at the same time
+Using the fld.drawSegments() function grayscales the original image, so I don't use it in UOpenCV</div>
+<pre>
+color = UOpenCV(fname)
+img = color.FastLineDetector().imshow()
+print('(x1, y1)-(x2, y2)')
+for line in img.lines:
+    x1, y1, x2, y2 = line [0]
+    print('({}, {})-({}, {})'.format(int(x1), int(y1), int(x2), int(y2)))
+</pre>
+</td></tr>
+
+<tr><th>LineSegmentDetector(refine = cv2.LSD_REFINE_STD, scale = 0.8, sigma_scale = 0.6, quant = 2.0, ang_th = 22.5, log_eps = 0, density_th = 0.7, n_bins = 1024, pcolor =(0,0,255))</th></tr>
+<tr><td>
+<div class = "exp">Line segment detection by Line Segment Detector
+        In the case of a color image, it is processed after making it a grayscale image internally.
+        It can be processed without blurring. You can do it with a binary image</div>
+<div class = "param">(I don't understand the meaning of the argument)</div>
+<div class = "ret">Image with UOpenCV line segment drawn
+Note that the UOpenCV.lines line segment list(x1, y1)-(x2, y2) is a set float type.
+        Add the result as an instance</div>
+<div class = "alert">Returns a color image</div>
+<pre>
+color = UOpenCV(fname)
+img = color.imshow().LineSegmentDetector().imshow()
+print('(x1, y1)-(x2, y2)')
+for line in img.lines:
+    x1, y1, x2, y2 = line [0]
+    print('({}, {})-({}, {})'.format(int(x1), int(y1), int(x2), int(y2)))
+</pre>
+</td></tr>
+
+<tr><th>HoughLines(rho: float = 1.0, theta: float = np.pi/180, threshold: int = 200, pcolor =(0,0,255))</th></tr>
+<tr><td>
+<div class = "exp">Hough transform to find a line Classic Hough transform <-It doesn't work as in the example
+        For HoughLines, only binary images need to be thinned or edge detected in advance.</Div>
+<div class = "param">rho distance resolution
+theta Angle resolution 180 or 360?
+threshold Voting threshold parameter. Only straight lines with enough votes are output
+pcolor drawing color</div>
+<div class = "ret">Image with UOpenCV line segment drawn
+UOpenCV.lines Straight line vector(rho, theta).rho is the distance from the origin(upper left corner of the image), and theta is the rotation angle of a straight line expressed in radians.
+        Add the result as an instance</div>
+<div class = "alert">Returns a color image</div>
+</td></tr>
+
+<tr><th>findContours(mode: int = cv2.RETR_TREE, method: int = cv2.CHAIN_APPROX_SIMPLE, minsize: int = 100, pcolor =(255,255,255), thickness: int = 1)</th></tr>
+<tr><td>
+<div class = "exp">Extract and draw contour lines(used as contouring)
+        findContours is binary image only
+        The edges turn white</div>
+<div class = "param">mode How to search the contour cv2.RETR_TREE, cv2.RETR_EXTERNAL
+method How to approximate the contour cv2.CHAIN_APPROX_SIMPLE
+minsize Minimum size Removes noise
+pcolor drawing color
+thickness Line width</div>
+<div class = "ret">UOpenCV Contoured image
+UOpenCV.contours List of extracted contours
+UOpenCV.hierarchy hierarchy
+        Add the result as an instance</div>
+<div class = "alert">Returns a color image</div>
+<pre>
+bin = UOpenCV(fname).grayscale().threshold()
+img = bin.imshow().findContours().imshow()
+</pre>
+</td></tr>
+</table>
+</article>
+
+
+</section>
+
+<footer>
+UOpenCV: opencv-python wrapper class.(C) Copyright 2022 Y.ENDOU All right reserved.<br>
+This file was translated by google.
+</footer>
+</body>
+
+</html>

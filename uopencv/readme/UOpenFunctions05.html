@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<meta content="author" name="Y.ENDOU">
+	<meta content="UOpenCV,opencv-python,ラッパー,独自クラス" name="keywords">
+	<meta content="opencv-pythonのラッパークラス" name="description">
+	<title>画像処理　シェーディング補正、ヒストグラム変換</title>
+	<link href="reset.css" rel="stylesheet">
+	<link href="uopencv.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		画像処理　シェーディング補正、ヒストグラム変換
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="index.html">はじめに</a></li>
+			<li><a href="UOpenCVClass.html">UOpenCVクラスの使用方法</a></li>
+			<li><a href="UOpenFunctions01.html">UOpenCV 関数一覧</a></li>
+			<li><a href="UOpenFunctions02.html">コンストラクタ、プロパティー、入出力</a></li>
+			<li><a href="UOpenFunctions03.html">画素アクセス、画像計測</a></li>
+			<li><a href="UOpenFunctions04.html">幾何変換、画像変換</a></li>
+			<li><a href="UOpenFunctions05.html">画像処理　シェーディング補正、ヒストグラム変換</a></li>
+			<li><a href="UOpenFunctions06.html">画像処理　画像フィルタ、ルックアップテーブル</a></li>
+			<li><a href="UOpenFunctions07.html">画像処理　モルフォロジー処理、エッジ検出</a></li>
+			<li><a href="UOpenFunctions08.html">画像処理　アート効果、２値画像処理</a></li>
+			<li><a href="UOpenFunctions09.html">画像処理　逆FFT変換、画像間演算</a></li>
+			<li><a href="UOpenFunctions10.html">補助関数</a></li>
+			<li><a href="UOpenFunctions11.html">ヒストグラムの表示</a></li>
+		</ul>
+	</nav>
+
+	<section>
+
+<h1>シェーディング補正</h1>
+<article class="content">
+<table>
+<tr><th>shading_black(black_reference,offset:float=128.0)</th></tr>
+<tr><td>
+<div class="exp">黒基準画像を用いたシェーディング補正
+        処理後画像 = 処理前画像 - 黒基準画像 + オフセット の計算を行う</div>
+<div class="param">black_reference 黒基準画像
+offset オフセット</div>
+<div class="alert">黒基準画像は同じ大きさのカラー画像（３チャンネル画像）でなければならない</div>
+</td></tr>
+
+<tr><th>shading_white_black(white_reference,black_reference,multi:float=255.0)</th></tr>
+<tr><td>
+<div class="exp">白・黒基準画像を用いたシェーディング補正
+        処理後画像 = (補正前画像 - 黒基準画像) / (白基準画像 - 黒基準画像) * nulti の計算を行う</div>
+<div class="param">white_reference 白基準画像
+black_reference 黒基準画像
+multi 倍率</div>
+<div class="alert">白・黒基準画像は同じ大きさのカラー画像（３チャンネル画像）でなければならない</div>
+</td></tr>
+
+<tr><th>shading_unevenness(ksize:int=31)</th></tr>
+<tr><td>
+<div class="exp">シェーディング補正(凹凸係数)
+        シェーディング画像に良好なしきい値を設定できる変動しきい値式2値化処理法(凹凸係数)
+        元画像を、カーネルサイズで単純平滑化(blur())した画像で割る</div>
+<div class="param">ksize カーネルサイズ</div>
+</td></tr>
+
+<tr><th>shading_blackhat(ksize:int=15)</th></tr>
+<tr><td>
+<div class="exp">シェーディング補正(モルフォロジー演算)
+        モルフォロジー演算(BLACKHAT)を行った後、ネガポジ変換する</div>
+<div class="param">ksize カーネルサイズ</div>
+</td></tr>
+
+</table>
+</article>
+
+<h1>ヒストグラム変換</h1>
+<article class="content">
+<table>
+<tr><th>equalizeHist_CLAHE(clipLimit:float=40.0, tile:int=8)</th></tr>
+<tr><td>
+<div class="exp">コントラスト制限適応ヒストグラム平坦化 Contrast Limited Adaptive Histogram Equalization
+        カラー画像ならば輝度のみヒストグラムを変更する</div>
+<div class="param">clipLimit 大きくすればコントラストが強くなる
+tile 大きいと大局的に平坦化、小さいと部分的に平坦化</div>
+</td></tr>
+
+<tr><th>equalizeHist()</th></tr>
+<tr><td>
+<div class="exp">ヒストグラム平坦化
+        カラー画像ならば輝度のみヒストグラムを変更する</div>
+</td></tr>
+
+<tr><th>normalize(alpha:float=0,beta:float=255,norm_type:int=cv2.NORM_MINMAX)</th></tr>
+<tr><td>
+<div class="exp">ヒストグラム正規化
+        カラー画像ならば輝度のみヒストグラムを変更する</div>
+<div class="param">norm_type=cv2.NORM_MINMAX の場合、alpha – 範囲の下界
+                                          beta  – 範囲の上界
+                                          alpha から beta の範囲にヒストグラムを変換する
+norm_type=cv2.NORM_INF , 
+          cv2.NORM_L1  ,
+          cv2.NORM_L2 の場合、    alpha – 正規化されるノルム値
+                                          beta  – 未使用</div>
+</td></tr>
+
+<tr><th>expand_histogram(min:float,max:float)</th></tr>
+<tr><td>
+<div class="exp">ヒストグラム拡張
+        輝度の分布を min から maxに収める
+        カラー画像ならば輝度のみヒストグラムを変更する
+        y' = y_max * (y - min) / (max - min) の計算を行う</div>
+<div class="param">min , max 輝度の分布を min から maxに収める</div>
+</td></tr>
+
+<tr><th>stretch_histogram(min1:float,max1:float,min2:float=0.0,max2:float=255.0)</th></tr>
+<tr><td>
+<div class="exp">ヒストグラム伸張
+        カラー画像ならば輝度のみヒストグラムを変更する
+        grad = (max2 - min2) / (max1 - min1)
+        y' = grad * (y - min1) + min2 の計算を行う</div>
+<div class="param">min1,max1 拡大する前の輝度
+min2,max2 拡大した後の輝度</div>
+</td></tr>
+
+<tr><th>bitwise_not_brightness()</th></tr>
+<tr><td>
+<div class="exp">輝度反転
+        輝度のみ反転する
+        カラー画像以外は、bitwise_notと同じ結果になる</div>
+</td></tr>
+
+<tr><th>bitwise_not()</th></tr>
+<tr><td>
+<div class="exp">ネガポジ反転
+        ３チャンネル反転する</div>
+</td></tr>
+
+<tr><th>convert_histogram_avg_std(avg:float=128,std:float=32)</th></tr>
+<tr><td>
+<div class="exp">輝度の平均と標準偏差を指定してヒストグラム変更
+        カラー画像ならば輝度のみヒストグラムを変更する
+         y' = (y - mean(y)) * std / std(y) + avg の計算をする</div>
+<div class="param">avg:変更後の輝度の平均
+std:変更後の輝度の標準偏差</div>
+</td></tr>
+
+<tr><th>convert_contrast_brightness(alpha:float=1.0,beta:float=0.0)</th></tr>
+<tr><td>
+<div class="exp">度コントラスト、明るさを変更
+        カラー画像ならば輝度のみヒストグラムを変更する
+        y' = (alpha * (y - 127) + 127 ) + beta の計算を行う</div>
+<div class="param">alpha 1 &lt; alpha コントラスト上昇  0 &lt; alpha &lt; 1コントラスト低下
+beta  0 &lt; beta 輝度上昇 beta &lt; 0 輝度低下</div>
+</td></tr>
+
+<tr><th>convertScaleAbs(alpha:float=1.0,beta:float=0)</th></tr>
+<tr><td>
+<div class="exp">コントラスト、明るさを変更する
+        3つのチャンネルについて、dst = src * alpha + beta の計算を行う</div>
+<div class="param">alpha 1 &lt; alpha コントラスト上昇  0 &lt; alpha &lt; 1コントラスト低下
+beta  0 &lt; beta 輝度上昇 beta &lt; 0 輝度低下</div>
+</td></tr>
+
+
+</table>
+</article>
+
+
+</section>
+
+	<footer>
+		UOpenCV : opencv-python wrapper class. (C)Copyright 2022 Y.ENDOU All right reserved.
+	</footer>
+</body>
+
+</html>
